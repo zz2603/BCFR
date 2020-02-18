@@ -1,0 +1,46 @@
+---
+title: "BCFR breast epi"
+author: "Ziyi Zhao"
+date: "2/18/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+
+
+```
+
+# Breast Epi
+
+* primary key is personal id (unique), so every tables we created need to carry personal id.
+
+```{r}
+# import the breast_epi
+## bc_epi <- read_csv("...") %>% janitor::clean_names()
+
+# filter out subjects in US and Canndian registries
+## bc_epi <- filter(bc_epi, center_no %in% c(1,2,3,5,6))
+
+# select variables about age
+## bc_epi_age <- select(bc_epi,person_id,dt_interview,age_interview)
+
+# select varaibles about education
+## bc_epi_edu <- select(bc_epi,person_id,education)
+
+# select variables about marital status
+## bc_epi_marstat <- select(bc_epi,person_id,marstat)
+
+# select variables about race
+## bc_epi_racevar <- colnames(bc_epi) %>% str_detect("race")
+## bc_epi_
+
+
+
+```
+
+Problem about data:
+* why are there four variables about race? (their questions are exactly same, so why repeated?)
+* Why is there a variable about race in text? 
