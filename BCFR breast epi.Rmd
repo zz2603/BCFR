@@ -49,7 +49,14 @@ library(tidyverse)
 ##                    cbind(bc_epi_bwl)
 
 # select variable about cigarette smoking
-## 
+## bc_epi_cig <- select(bc_epi,starts_with("cig")) %>% cbind(bc_epi_psid)
+
+# select varaibles about physical activities
+## bc_epi_strn <- select(bc_epi,starts_with("stren"))
+## bc_epi_mod <- select(bc_epi,starts_with("mod"))
+## bc_epi_phyc <- cbind(bc_epi_strn,bc_epi_mod,bc_epi_psnid)
+
+# 
 
 
 
@@ -57,5 +64,11 @@ library(tidyverse)
 ```
 
 Problem about data:
+
 * why are there four variables about race? (their questions are exactly same, so why repeated?)
+
 * Why is there a variable about race in text? 
+
+* The physical activity is divided into two parts: strenuous and moderate.How do we deal with these two? 
+
+* The units of physical activity also separate into hours/week and month/year. Which unit should we select? 
