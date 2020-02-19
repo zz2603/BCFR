@@ -67,7 +67,7 @@ Problem about data:
 
 * why are there four variables about race? (their questions are exactly same, so why repeated?)
 
-* Why is there a variable about race in text? 
+* Why is there a variable about race in text? new variable for race.
 
 * The physical activity is divided into two parts: strenuous and moderate.How do we deal with these two? 
 

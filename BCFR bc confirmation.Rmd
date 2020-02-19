@@ -36,11 +36,11 @@ Since we only use data from registries in Canada and US, we would not use any ta
 Problem: 
 * what does 'test site' mean in varaible center_no?
 
-* What shall we do with variable 'Source_BR'? Does source of breast cancer matter?
+* What shall we do with variable 'Source_BR'? Does source of breast cancer matter? sensitivity analysis
 
 * What can we do with missing and not asked subjects?
 
-* For variable breast surgeries, should we only keep subject without breast surgeries? 
+* For variable breast surgeries, should we only keep subject without breast surgeries? until two breast removed, then considered as censored subjects
 
 
 
