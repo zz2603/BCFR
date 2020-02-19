@@ -34,8 +34,23 @@ library(tidyverse)
 ## bc_epi_marstat <- select(bc_epi,person_id,marstat)
 
 # select variables about race
-## bc_epi_racevar <- colnames(bc_epi) %>% str_detect("race")
-## bc_epi_
+## bc_epi_psid <- select(bc_epi,person_id)
+## bc_epi_race <- select(bc_epi,contains("race")) %>% cbind(bc_epi_psid)
+
+# select variables about height and BMI
+## bc_epi_mbi <- select(bc_epi,person_id,height,weight) %>% 
+##                  mutate(ht_m = height*2.54/100,
+##                         wt_kg = weight*0.453,
+##                         bmi = wt_kg/(ht_m^2))
+
+# select variables about alcohol
+## bc_epi_bwl <- select(bc_epi,person_id,beer_wk,wine_wk,liquor_wk)
+## bc_epi_alcoh <- select(bc_epi,contains("alcoh")) %>% 
+##                    cbind(bc_epi_bwl)
+
+# select variable about cigarette smoking
+## 
+
 
 
 
