@@ -15,7 +15,7 @@ library(tidyverse)
 
 # Breast Epi
 
-* primary key is personal id (unique), so every tables we created need to carry personal id.
+## Import dataset
 
 ```{r}
 # import the breast_epi
@@ -24,51 +24,91 @@ library(tidyverse)
 # filter out subjects in US and Canndian registries
 ## bc_epi <- filter(bc_epi, center_no %in% c(1,2,3,5,6))
 
+```
+
+
+## Age at interview
+
+```{r}
 # select variables about age
 ## bc_epi_age <- select(bc_epi,person_id,dt_interview,age_interview)
 
+
+```
+
+
+## Education
+
+```{r}
 # select varaibles about education
 ## bc_epi_edu <- select(bc_epi,person_id,education)
 
+
+```
+
+
+## Marital status
+
+```{r}
 # select variables about marital status
 ## bc_epi_marstat <- select(bc_epi,person_id,marstat)
 
+
+```
+
+
+## Race/ethnicity
+
+```{r}
 # select variables about race
 ## bc_epi_psid <- select(bc_epi,person_id)
 ## bc_epi_race <- select(bc_epi,contains("race")) %>% cbind(bc_epi_psid)
 
+
+```
+
+
+## Height, BMI
+
+```{r}
 # select variables about height and BMI
 ## bc_epi_mbi <- select(bc_epi,person_id,height,weight) %>% 
-##                  mutate(ht_m = height*2.54/100,
-##                         wt_kg = weight*0.453,
-##                         bmi = wt_kg/(ht_m^2))
+##                  mutate(ht_m = height/100,
+##                         bmi = weight/(ht_m^2))
 
+
+```
+
+
+```{r}
 # select variables about alcohol
 ## bc_epi_bwl <- select(bc_epi,person_id,beer_wk,wine_wk,liquor_wk)
 ## bc_epi_alcoh <- select(bc_epi,contains("alcoh")) %>% 
 ##                    cbind(bc_epi_bwl)
 
+
+```
+
+
+```{r}
 # select variable about cigarette smoking
 ## bc_epi_cig <- select(bc_epi,starts_with("cig")) %>% cbind(bc_epi_psid)
 
+
+```
+
+
+```{r}
 # select varaibles about physical activities
 ## bc_epi_strn <- select(bc_epi,starts_with("stren"))
 ## bc_epi_mod <- select(bc_epi,starts_with("mod"))
 ## bc_epi_phyc <- cbind(bc_epi_strn,bc_epi_mod,bc_epi_psnid)
 
-# 
-
-
-
-
 ```
 
-Problem about data:
 
-* why are there four variables about race? (their questions are exactly same, so why repeated?)
 
-* Why is there a variable about race in text? new variable for race.
 
-* The physical activity is divided into two parts: strenuous and moderate.How do we deal with these two? 
 
-* The units of physical activity also separate into hours/week and month/year. Which unit should we select? 
+
+
