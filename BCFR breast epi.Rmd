@@ -32,6 +32,7 @@ library(tidyverse)
 ```{r}
 # select variables about age
 ## bc_epi_age <- select(bc_epi,person_id,dt_interview,age_interview)
+##                  
 
 
 ```
@@ -41,7 +42,22 @@ library(tidyverse)
 
 ```{r}
 # select varaibles about education
-## bc_epi_edu <- select(bc_epi,person_id,education)
+## bc_epi_edu <- select(bc_epi,person_id,education) %>% 
+##                    mutate(education = factor(education),
+##                           education = relevel(education, ref = "1"))
+
+# frequency table
+## bc_epi_edu %>% mutate(education = recode("1" = "Less than 8 years",
+##                                          "2" = "8-11 years (without graduation),
+##                                          "3" = "High school graduation/G.E.D",
+##                                          "4" = "Vocational or technical school",
+##                                          "5" = "Some college or university",
+##                                          "6" = "Bachelor's degree",
+##                                          "7" = "Graduate degree",
+##                                          "8" = "Not asked",
+##                                          "9" = "Missing") %>% 
+##                group_by(education) %>% 
+##                summarize(frequency=desc(n()))
 
 
 ```
@@ -80,6 +96,8 @@ library(tidyverse)
 ```
 
 
+## Alcohol
+
 ```{r}
 # select variables about alcohol
 ## bc_epi_bwl <- select(bc_epi,person_id,beer_wk,wine_wk,liquor_wk)
@@ -90,6 +108,8 @@ library(tidyverse)
 ```
 
 
+## Cigarette smoking
+
 ```{r}
 # select variable about cigarette smoking
 ## bc_epi_cig <- select(bc_epi,starts_with("cig")) %>% cbind(bc_epi_psid)
@@ -97,6 +117,8 @@ library(tidyverse)
 
 ```
 
+
+## physical activities
 
 ```{r}
 # select varaibles about physical activities
