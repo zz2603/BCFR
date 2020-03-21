@@ -1,0 +1,182 @@
+---
+title: "data merging and cleaning"
+author: "Ziyi Zhao"
+date: "3/16/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+
+```
+
+The purpose of this code file is to gather all related information from each spreadsheet.
+
+# Import dataset separately
+
+All spreadsheets in xlsx dataset are converted into csv file separately, and each csv file is named with the name of spreadsheet.
+
+```{r}
+## import dataset 'family membership.csv'
+fam_mem <- read_csv("./data/family_membership.csv") %>% 
+  janitor::clean_names()
+
+## import dataset 'bc_epi.csv'
+bc_epi <- read_csv("./data/bc_epi.csv") %>% 
+  janitor::clean_names()
+
+## import dataset 'individual.csv'
+indvd <- read_csv("./data/individual.csv") %>% 
+  janitor::clean_names()
+
+## import dataset 'nutrient.csv'
+nutrnt <- read_csv("./data/nutrient.csv") %>% 
+  janitor::clean_names()
+
+## import dataset 'bc_rx.csv'
+bc_rx <- read_csv("./data/bc_rx.csv") %>% 
+  janitor::clean_names()
+
+## import dataset 'bc_surgery.csv'
+bc_surgry <- read_csv("./data/bc_surgery.csv") %>% 
+  janitor::clean_names()
+
+## import dataset 'bc_mutation.csv'
+bc_mutat <- read_csv("./data/bc_mutation.csv") %>% 
+  janitor::clean_names()
+
+## import dataset 'bc_epi_status.csv'
+bc_epi_stat <- read_csv("./data/bc_epi_status.csv") %>% 
+  janitor::clean_names()
+
+## import dataset 'pregnancy.csv'
+pregncy <- read_csv("./data/pregnancy.csv") %>% 
+  janitor::clean_names()
+
+## import dataset 'cancer.csv'
+cancer <- read_csv("./data/cancer.csv") %>% 
+  janitor::clean_names()
+
+## import dataset 'family.csv'
+famly <- read_csv("./data/family.csv") %>% 
+  janitor::clean_names()
+
+## import dataset 'derived_var.csv'
+derived_var <- read_csv("./data/derived_var.csv") %>% 
+  janitor::clean_names()
+
+## import dataset 'bc_invasive.csv'
+bc_invas <- read_csv("./data/bc_invasive.csv") %>% 
+  janitor::clean_names()
+
+## import dataset 'bc_confirmation.csv'
+bc_confirm <- read_csv("./data/bc_confirmation.csv") %>% 
+  janitor::clean_names()
+
+## import dataset 'Hawaii_diet.csv'
+hawaii_dt <- read_csv("./data/Hawaii_diet.csv") %>% 
+  janitor::clean_names()
+
+```
+
+# binding and merging dataset
+
+There are `r dim(bc_epi)[1]` unique rows (subjects) in total. However, not all datasets have unique subjects or contain all subjects. The first step is to select important variable from these datasets, such as follow-up, nutrient, other confounding covariates.
+
+We'd first merge the dataset without duplicated rows.
+
+```{r}
+## build a new dataset by binding fam_mem and bc_epi
+bc_data <- left_join(fam_mem,bc_epi,by="new_id") %>% 
+  select(-c(center_no.y,aus_education))
+
+## the name of center number is changes due to previous merging
+## rename the center number
+colnames(bc_data)[2] <- "center_no"
+
+## merge bc_data with indvd and create a new table bc_data1
+bc_data1 <- left_join(bc_data,indvd,by="new_id") %>% 
+  select(-c(center_no.y,diet_q_aus))
+colnames(bc_data1)[2] <- "center_no"
+
+## merge bc_data1 with bc_mutation and create a new table bc_data2
+bc_data2 <- left_join(bc_data1,bc_mutat,by="new_id") %>% 
+  select(-center_no.y)
+colnames(bc_data2)[2] <- "center_no"
+
+## merge bc_data2 with bc_rx and create a new table bc_data3
+bc_data3 <- left_join(bc_data2,bc_rx,by="new_id") %>% 
+  select(-center_no.y)
+colnames(bc_data3)[2] <- "center_no"
+
+## merge bc_data3 with derived_var and create a new table bc_data4
+bc_data4 <- left_join(bc_data3,derived_var,by="new_id") %>% 
+  select(-center_no.y)
+colnames(bc_data4)[2] <- "center_no"
+
+## merge bc_data4 with famly and create a new table bc_data5
+bc_data5 <- left_join(bc_data4,famly,by="family_id") %>% 
+  select(-center_no.y)
+colnames(bc_data5)[2] <- "center_no"
+
+## before merging bc_data5 with nutrnt, select variables for MDS and aMED
+## create a new table mds_nutrnt
+## merge bc_data5 with mds_nutrnt and create a new table bc_data6
+mds_nutrnt <- select(nutrnt,c(new_id,calories_in_food,
+                              satur_fat_in_food,monounsat_fat_in_food,
+                              food_group_veg_exc_legumes,
+                              food_group_potatoes_tubers,
+                              total_grain,whole_grain,
+                              food_group_all_fruits_inc_juice,
+                              food_group_fruit_juice_only,
+                              total_fruit,
+                              food_group_nuts,
+                              food_group_all_dairy,
+                              alcohol_in_food,
+                              food_group_redmeat_nonprocessed,
+                              food_group_processed_redmeat,
+                              food_group_poultry,
+                              food_group_processed_poultry,
+                              food_group_legumes,
+                              fish_only))
+bc_data6 <- left_join(bc_data5,mds_nutrnt,by="new_id")
+
+```
+
+Since subjects can have more than one tumors, they may cause duplicated rows. It would be very messy if we merge datasets with duplicated rows. I will create summary and graph for dataset I merged above first.
+
+```{r}
+## excluding centers in Australia
+bc_data_exc_aus <- bc_data6 %>% 
+  filter(center_no %in% c(1,2,3,5,6,7))
+
+bc_data_exc_aus %>% group_by(center_no) %>% 
+  summarize(freq = n()) %>% 
+  knitr::kable() ## generate a table frequency for each center
+
+## convert dt_interview into date format
+dt_intvw <- bc_data_exc_aus %>% pull(dt_interview) %>% as.character()
+
+dt_intvw_yr <- rep("0000",length(dt_intvw))
+dt_intvw_mth <- rep("00",length(dt_intvw))
+dt_intvw_day <- rep("00",length(dt_intvw))
+dt_intvw_new <- rep("0000-00-00",length(dt_intvw))
+
+for (i in 1:length(dt_intvw)) {
+  dt_intvw_yr[i] <- substr(dt_intvw[i],1,4)
+  dt_intvw_mth[i] <- substr(dt_intvw[i],5,6)
+  dt_intvw_day[i] <- substr(dt_intvw[i],7,8)
+  dt_intvw_new[i] <- paste0(dt_intvw_yr[i],"-",dt_intvw_mth[i],"-",dt_intvw_day)
+}
+
+date_intvw <- as.Date(dt_intvw_new)
+
+bc_data_exc_aus[,4] <- date_intvw
+
+
+
+
+```
+
