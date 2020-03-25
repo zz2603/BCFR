@@ -21,63 +21,63 @@ All spreadsheets in xlsx dataset are converted into csv file separately, and eac
 
 ```{r}
 ## import dataset 'family membership.csv'
-fam_mem <- read_csv("./data/family_membership.csv") %>% 
+fam_mem <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/family_membership.csv") %>% 
   janitor::clean_names()
 
 ## import dataset 'bc_epi.csv'
-bc_epi <- read_csv("./data/bc_epi.csv") %>% 
+bc_epi <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/bc_epi.csv") %>% 
   janitor::clean_names()
 
 ## import dataset 'individual.csv'
-indvd <- read_csv("./data/individual.csv") %>% 
+indvd <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/individual.csv") %>% 
   janitor::clean_names()
 
 ## import dataset 'nutrient.csv'
-nutrnt <- read_csv("./data/nutrient.csv") %>% 
+nutrnt <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/nutrient.csv") %>% 
   janitor::clean_names()
 
 ## import dataset 'bc_rx.csv'
-bc_rx <- read_csv("./data/bc_rx.csv") %>% 
+bc_rx <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/bc_rx.csv") %>% 
   janitor::clean_names()
 
 ## import dataset 'bc_surgery.csv'
-bc_surgry <- read_csv("./data/bc_surgery.csv") %>% 
+bc_surgry <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/bc_surgery.csv") %>% 
   janitor::clean_names()
 
 ## import dataset 'bc_mutation.csv'
-bc_mutat <- read_csv("./data/bc_mutation.csv") %>% 
+bc_mutat <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/bc_mutation.csv") %>% 
   janitor::clean_names()
 
 ## import dataset 'bc_epi_status.csv'
-bc_epi_stat <- read_csv("./data/bc_epi_status.csv") %>% 
+bc_epi_stat <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/bc_epi_status.csv") %>% 
   janitor::clean_names()
 
 ## import dataset 'pregnancy.csv'
-pregncy <- read_csv("./data/pregnancy.csv") %>% 
+pregncy <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/pregnancy.csv") %>% 
   janitor::clean_names()
 
 ## import dataset 'cancer.csv'
-cancer <- read_csv("./data/cancer.csv") %>% 
+cancer <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/cancer.csv") %>% 
   janitor::clean_names()
 
 ## import dataset 'family.csv'
-famly <- read_csv("./data/family.csv") %>% 
+famly <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/family.csv") %>% 
   janitor::clean_names()
 
 ## import dataset 'derived_var.csv'
-derived_var <- read_csv("./data/derived_var.csv") %>% 
+derived_var <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/derived_var.csv") %>% 
   janitor::clean_names()
 
 ## import dataset 'bc_invasive.csv'
-bc_invas <- read_csv("./data/bc_invasive.csv") %>% 
+bc_invas <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/bc_invasive.csv") %>% 
   janitor::clean_names()
 
 ## import dataset 'bc_confirmation.csv'
-bc_confirm <- read_csv("./data/bc_confirmation.csv") %>% 
+bc_confirm <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/bc_confirmation.csv") %>% 
   janitor::clean_names()
 
 ## import dataset 'Hawaii_diet.csv'
-hawaii_dt <- read_csv("./data/Hawaii_diet.csv") %>% 
+hawaii_dt <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/Hawaii_diet.csv") %>% 
   janitor::clean_names()
 
 ```
