@@ -572,7 +572,7 @@ bc_rx_nadx_id <- bc_data7 %>% filter(new_id %in% bc_rx_nobc_id) %>%
 
 There are 16 subjects with NA in diagnosis date answered answer 'no', but We don't know if they were diagnosed within 2 months after interview.
 
-There are 106-16-6=84 sunjects who asnwered no in questions but could be excluded during previous process of exclusion by comparison.
+There are 106-16-6=84 sunjects who answered no in questions but could be excluded during previous process of exclusion by comparison.
 
 We checked the id of 12 subjects with incomplete information of diagnosis date. There is no overlapped subjects.
 
