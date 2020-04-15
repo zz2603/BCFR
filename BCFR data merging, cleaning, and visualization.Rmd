@@ -19,7 +19,7 @@ The purpose of this code file is to gather all related information from each spr
 
 All spreadsheets in xlsx dataset are converted into csv file separately, and each csv file is named with the name of spreadsheet.
 
-```{r}
+```{r include=FALSE}
 ## import dataset 'family membership.csv'
 fam_mem <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/family_membership.csv") %>% 
   janitor::clean_names()
@@ -88,7 +88,7 @@ There are `r dim(bc_epi)[1]` unique rows (subjects) in total. However, not all d
 
 ## Merge the dataset without tumor id.
 
-```{r}
+```{r include=FALSE}
 ## build a new dataset by binding fam_mem and bc_epi
 bc_data <- left_join(fam_mem,bc_epi,by="new_id") %>% 
   select(-c(center_no.y,aus_education))
@@ -150,7 +150,7 @@ Since subjects can have more than one tumors, they may cause duplicated rows. It
 
 ## Excluding patients from centers in Australia
 
-```{r}
+```{r echo=FALSE}
 ## create a new dataset without Australian centers
 bc_data_exc_aus <- bc_data6 %>% 
   filter(center_no %in% c(1,2,3,5,6))
@@ -165,7 +165,7 @@ The table above showed the distribution of patients after we exclude the patient
 
 ## Exclude participants who did not complete questionnaires
 
-```{r}
+```{r echo=FALSE}
 # Extract id and variables of questionnaires and nutrients
 # view the distribution of subjects who complete epi questionnaires
 bc_data_exc_aus %>% select(new_id,epi_q_breast,diet_q_hi,
@@ -193,7 +193,7 @@ bc_data_exc_aus %>% select(new_id,epi_q_breast,diet_q_hi,
 
 Based on the table, there are 18160 subjects with "3". "3" was denotes as subject who completed epi questionnaires personally. No one should be excluded.
 
-```{r}
+```{r echo=FALSE}
 # view the distribution of subjects who complete hawaii diet questionnaires
 bc_data_exc_aus %>% select(new_id,epi_q_breast,diet_q_hi,
                            calories_in_food,
@@ -232,7 +232,7 @@ bc_data_exc_aus %>% select(new_id,epi_q_breast,diet_q_hi,
 
 * There are 3286 missing responses which need further revision.
 
-```{r}
+```{r echo=FALSE}
 bc_data_exc_aus %>% filter(is.na(diet_q_hi)) %>% 
   select(new_id,epi_q_breast,diet_q_hi,
                            calories_in_food,
@@ -255,11 +255,11 @@ bc_data_exc_aus %>% filter(is.na(diet_q_hi)) %>%
 
 ```
 
-After futher check, although most of them do not have responses (NA), we do have their information of nutrients. We cannot exclude them directly.
+After further check, although most of them do not have responses (NA), we do have their information of nutrients. We cannot exclude them directly.
 
 Only exclude those with missing information in nutrient.
 
-```{r}
+```{r echo=FALSE}
 # extract id of those without missing info in nutrient variables
 bc_data_dietq_na_id <- bc_data_exc_aus %>% filter(is.na(diet_q_hi)) %>% 
   select(new_id,calories_in_food,
@@ -299,7 +299,9 @@ bc_data_exc_aus %>% filter(diet_q_hi==3) %>%
                            food_group_processed_poultry,
                            food_group_legumes,
                            fish_only) %>% 
-  drop_na()
+  drop_na() %>% 
+  dim() %>%
+  .[1]
 
 ```
 
@@ -340,66 +342,109 @@ bc_data_epi_diet_q <- bc_data_exc_aus %>%
 
 There are `r dim(bc_data_epi_diet_q)[1]` subjects left after we excluding subjects who didn't complete epi or diet questionnaire for different reasons.
 
+Exclude the patients with abnormal energy intake. (> 4000 cal and <500 cal) 
+
+```{r echo=FALSE}
+bc_calories <- pull(bc_data_epi_diet_q,calories_in_food) 
+bc_cal_cat <- rep(0, length(bc_calories))
+for (i in 1:length(bc_cal_cat)) {
+  if (bc_calories[i] < 500) {
+    bc_cal_cat[i] = "0-499"
+  } else if (bc_calories[i] >= 500 & bc_calories[i] < 1000) {
+    bc_cal_cat[i] = "500-999"
+  } else if (bc_calories[i] >= 1000 & bc_calories[i] < 1500) {
+    bc_cal_cat[i] = "1000-1499"
+  } else if (bc_calories[i] >= 1500 & bc_calories[i] < 2000) {
+    bc_cal_cat[i] = "1500-1999"
+  } else if (bc_calories[i] >= 2000 & bc_calories[i] < 2500) {
+    bc_cal_cat[i] = "2000-2499"
+  } else if (bc_calories[i] >= 2500 & bc_calories[i] < 3000) {
+    bc_cal_cat[i] = "2500-2999"
+  } else if (bc_calories[i] >= 3000 & bc_calories[i] < 3500) {
+    bc_cal_cat[i] = "3000-3499"
+  } else if (bc_calories[i] >= 3500 & bc_calories[i] <= 4000) {
+    bc_cal_cat[i] = "3500-4000"
+  } else {
+    bc_cal_cat[i] = "4000+"
+  }
+}
+
+bc_data_epi_diet_q <- bc_data_epi_diet_q %>% 
+  add_column(bc_cal_cat,.after = "calories_in_food")
+
+# create a table to see distribution
+bc_data_epi_diet_q %>% group_by(bc_cal_cat) %>% 
+  summarize(freq = n())
+
+bc_data_epi_diet_q <- bc_data_epi_diet_q %>% 
+  filter(bc_cal_cat!="0-499") %>% 
+  filter(bc_cal_cat!="4000+")
+
+```
+
+Based on the table, there are 101 subjects with less than 500 cal and 722 subjects with greater than 4000 cal. 823 subjects should be removed from dataset.
+
+There are 14142 subjects left in the dataset.
+
 ## Exclude patient who were diagnosed with breast cancer or had surgery of mastectomy before the date of interview.
 
 ### breast cancer diagnosis 
 
 We can use the information from bc_rx and looked at the answer of those two questions. We will exclude patients who answered yes.
 
-```{r}
+```{r echo=FALSE}
 # there are some patients missed these two questions
 # we only exclude people who answered yes
 # brca: 2 was denoted as those who answered no
 # 8 and 9 denoted not asked and missing
-bc_data_exc_diag <- bc_data_epi_diet_q %>% 
-  filter(is.na(brca)|brca %in% c(2,8,9))
+# see the distribution of brca
+bc_data_epi_diet_q %>% group_by(brca) %>% 
+  summarize(freq = n())
 
-## see the distribution of people without diagnosis of breast cancer and mastectomy
-bc_data_exc_diag %>% group_by(brca) %>% 
+
+```
+
+There are 5626 subjects who answered 'yes', 64 subjects answered 'no', and 8452 subjects with N/A. We cannot exclude those with N/A directly. We still need to check their date of diagnosis. Also, there could be recall bias happened. We need to check date of diagnosis for all of them.
+
+To get the date of diagnosis, we need to get information from cancer.csv. Pick the patient with earliest date of breast cancer diagnosis.
+
+```{r include=FALSE}
+# diagnose date of breast cancer
+# data is from cancer.csv
+# some patients could get more than one tumor from multiple sites
+# pick the patient with breast cancer
+# see the distribution of cancer site
+cancer %>% group_by(site) %>% 
   summarize(freq = n())
 
 ```
 
-After excluding subjects who answered 'yes', there are 68 subjects who answered 'no' in the question about breast cancer diagnosis. There are 8876 subjects with NA. We cannot exclude them. We still need to check their date of diagnosis.
+Based on ICD-O-3, we only choose the sites: C500-509.
 
-Extract the id number of subjects who answered no in breast cancer and mastectomy.
+```{r include=FALSE}
+# select subjects with breast cancer
+bc_cancer <- cancer %>% filter(site %in% c("C500","C501","C502","C503",
+                              "C504","C505","C506","C507",
+                              "C508","C509"))
 
-```{r}
-# create a new variable that included id of those who answered no in breast cancer diagnosis question
-bc_rx_nobc_id <- bc_data_exc_diag %>% filter(brca==2) %>% 
-  pull(new_id)
-
-```
-
-To get the date of diagnosis, we need to get information from cancer.csv. Eliminate the duplicated subjects by only selecting the earliest disgnosis date. Merge with bc_data_exc_diag. 
-
-```{r}
-# diagnose date of breast cancer
-# data is from cancer.csv
-# some patients could get more than one tumor, only use the earliest
-dt_dx <- pull(cancer,dxdate) %>% ymd() # convert into date format
-# there are 4904 answers that cannot be converted into time formart
+# only use the earliest dxdate of breast cancer
+dt_dx <- pull(bc_cancer,dxdate) %>% ymd() # convert into date format
+# there are 1629 answers that cannot be converted into time formart
 na_check <- which(is.na(dt_dx)) # get row number of missing date information
 
 # create a table to see distribution
-cancer[na_check,] %>% 
+bc_cancer[na_check,] %>% 
   select(dxdate) %>% 
   group_by(dxdate) %>% 
   summarize(n=n())
 
 ```
 
-The distribution of missing date is not good because there are so many missing month and day.
+The distribution of missing date is not good because there are so many missing month and day. We can eliminate the duplicated subjects by selecting the smallest dxdate and smallest age. For those with multiple tumor sites with equal diagnose date, only keep one of them. Some only have age at diagnosis without date and they have more than one tumor. Pick the smallest age at diagnosis. 
 
-We can eliminate the duplicated subjects by selecting the smallest dxdate 
-
-For those with multiple tumor sites with equal diagnose date, only keep one of them. Some only have age at diagnosis without date and they have more than one tumor 
-
-Pick the smallest age at diagnosis. We prefer the smallest dxest because it is the most accurate
-
-```{r}
+```{r include=FALSE}
 # create a new dataset without duplicated subject id by picked smallest dxdate
-cancer_data_dx <- cancer %>% 
+bc_cancer_data_dx <- bc_cancer %>% 
   filter(center_no %in% c(1,2,3,5,6)) %>% 
   select(new_id,agedx,dxdate,dxest) %>% 
   group_by(new_id) %>% 
@@ -411,67 +456,125 @@ cancer_data_dx <- cancer %>%
   filter(dxest==min_dxest) %>% 
   distinct()
 # we need to make sure if they have unique id
-sum(duplicated(cancer_data_dx[,1]))
+sum(duplicated(bc_cancer_data_dx[,1]))
 # it's 0, which means there is no duplicated subjects
-cancer_data_dx <- select(cancer_data_dx,-c(min_dxAge,early_dxdate,min_dxest))
+bc_cancer_data_dx <- select(bc_cancer_data_dx,-c(min_dxAge,early_dxdate,min_dxest))
 
 # we can merge the cancer data with the data without breast cancer and mas
-bc_data7 <- left_join(bc_data_exc_diag,cancer_data_dx,by="new_id")
+bc_data7 <- left_join(bc_data_epi_diet_q,bc_cancer_data_dx,by="new_id")
 
 ```
 
-There is a hiding process above I didn't choose to show here. During the filtration of cancer_data_dx, we cannot directly let age of diagnosis equal to the smallest one for each subject id, because there are some subjects have different age at diagnosis but exactly same diagnosis date. However, there is only one subject with this problem. After substracted date of diagnosis by date of birth, I find out we can use the smallest age at diagnosis. 
+There are 14142 subjects in total.
 
-Compare the dxdate and dt_interview among subjects with non-missing date (not fully missing).
+We can use dxage and dxdate to detemine if the diagnosis date is before interview date. We need to remove subject with missing dxage and dxdate.
 
-```{r}
-# there isn't not asked code 88888888
-# remove missing and NA
-# create a new variable that show if diagnosis date is before interview date
-# 1 was denoted as diagnosis date is before interview date 
-# 0 vice versa
-# see the distribution
-bc_data7 %>% filter(dxdate!=99999999) %>% 
-  filter(!is.na(dxdate)) %>% 
+```{r echo=FALSE}
+# remove missing
+dx_NA_id <- bc_data7 %>% 
+  filter(dxdate==99999999 & agedx==999) %>% 
+  pull(new_id)
+bc_id <- bc_data7 %>% pull(new_id)
+
+id_loc <- rep(0,length(dx_NA_id)) # create a vector to show the location of id
+for (i in 1:length(dx_NA_id)) {
+  id_loc[i] <- which(bc_id==dx_NA_id[i])
+}
+
+bc_id <- bc_id[-id_loc]
+
+bc_data7 <- bc_data7 %>% filter(new_id %in% bc_id)
+
+```
+
+There are 24 rows with missing dxdate and agedx. There isn't any rows with missing dt_interview and age_interview.
+
+Next, we checked those subjects with missing dxdate but agedx. We can compare the age at interview and age at diagnosis. We will select patients with age of diagnosis that is greater than or equal to age at interview. (we are temporarily not sure what to do to deal with those with equal agedx.) 
+
+```{r include=FALSE}
+# create a new variable with subject id who have missing diagnosis date
+# but agedx is greater than or equal to age at interview
+bc_int_bf_dx_missdate_id <- bc_data7 %>% 
+  filter(dxdate==99999999) %>% 
   select(new_id,dt_interview,age_interview,agedx,dxdate) %>% 
-  mutate(diag_bef_intvw = case_when(
-    dxdate <= dt_interview ~ 1,
-    dxdate > dt_interview ~ 0)) %>% 
-  group_by(diag_bef_intvw) %>% 
-  summarize(n=n())
+  filter(agedx>age_interview) %>% pull(new_id)
 
-# create a new tibble with interview date and diagnosis date
+```
+
+There are `r length(bc_int_bf_dx_missdate_id)` subjects with missing dxdate but greater or equal agedx (compared with age at interview).
+
+We next check patients with N/A dxdate and see how agedx change and we are sure that patients with NA dxdate all have NA agedx.
+
+```{r include=FALSE}
+# see total length of agedx
+bc_data7 %>% filter(is.na(dxdate)) %>% 
+  select(new_id,dt_interview,age_interview,age_interview,agedx,dxdate) %>% 
+  pull(agedx) %>% length()
+
+# see how many NA in agedx
+bc_data7 %>% filter(is.na(dxdate)) %>% 
+  select(new_id,dt_interview,age_interview,age_interview,agedx,dxdate) %>% 
+  pull(agedx) %>% is.na() %>% sum()
+
+# we need id for those with NA dxdate and dxage
+bc_dx_int_NA_agedxdate_id <- bc_data7 %>% filter(is.na(dxdate)) %>% pull(new_id)
+
+```
+
+There are `r length(bc_dx_int_NA_agedxdate_id)` subjects with N/A dxdate and agedx.
+
+We next check patient with dxdata information. We first compare agedx and age_interview.
+
+```{r include=FALSE}
+# exclude missing dxdate and N/A dxdate 
 bc_dx_int <- bc_data7 %>% filter(dxdate!=99999999) %>% 
   filter(!is.na(dxdate)) %>% 
   select(new_id,dt_interview,age_interview,agedx,dxdate)
 
 ```
 
-Except NA and missing, there are 2203 subjects with diagnosis date before interview date and 736 subjects with diagnosis date after interview date. We only keep subjects with diagnosis date after interview date.
+Except NA and missing dxdate, there are 7,518 subjects with dxdate info.
 
-According to the process above, there could be missing month and day in diagnosis date for some subjects and 99 or 9999 can always be greater than those with normal date. We may overestimate the number of subjects with diagnosis date after interview date.
+We can compared the agedx and age_interview directly as other research did. We first need to check if there are any missing age_interview and agedx.
 
-Next step, we are going to extract date information and convert them into date format. The specific variable of year and month are created to identify those with missing month or day. 
+```{r echo=FALSE}
+# check if there are missing in agedx and age_interview
+bc_dx_int %>% filter(age_interview==999|agedx==999)
+
+```
+
+There are 4 subjects with missing agedx. We can compare the dxdate alternatively. We next seet how many subjects have equal agedx and age_interview. 
+
+```{r include=FALSE}
+bc_dx_int %>% filter(age_interview==agedx)
+
+
+```
+
+There are 306 subjects with equal agedx and age at interview. For those subjects, we also need to compare the dxdate and dt_interview alternatively.
+
+For other subjects, we can compare the age directly. 
+
+```{r include=FALSE}
+# create a new variable for subject id who agedx is greater than age_interview
+bc_int_bf_dx_id <- bc_dx_int %>% filter(agedx!=999) %>% 
+  filter(age_interview < agedx) %>% pull(new_id)
+
+
+```
+
+There are `r length(bc_int_bf_dx_id)` subjects with agedx greater than age_interview.
+
+For those with miss dxage or equal dxage and age_interview, we need to compare the dt_interview and dxdate.
 
 ```{r}
 # extract interview date and convert to date format
-date_int <- pull(bc_dx_int,dt_interview) %>% ymd()
-# there is one failed to parse, shown as NA
-# see the location of NA
-which(is.na(date_int))
-# view the exact date
-pull(bc_dx_int,dt_interview)[1933]
-# month and day are missing, shown as 9999
-
+date_int <- bc_dx_int %>% filter(agedx==age_interview | agedx==999) %>% 
+  pull(dt_interview) %>% ymd()
 # create a new variable for year of interview
 date_int_yr <- year(date_int)
-date_int_yr[1933] <- 1997
-
 # create a new variable month of interview
-# there is one NA in 1933rd subject because of missing in month
 date_int_mth <- month(date_int)
-# for those missing in month, we used June instead
-date_int_mth[1933] <- 6
 
 # we also need the time point 'two months after diagnosis'
 # b/c subjects diagnosed within two months after interview should be excluded
@@ -482,45 +585,64 @@ date_int_two_mth <- date_int + ddays(61)
 
 #########################################################################
 
-# create a new variable
+# create a new variable for dxdate
 # extract diagnosis date and convert it into date format
-date_dx <- pull(bc_dx_int,dxdate) %>% ymd()
-# there are 636 failed to parse
-
+date_dx <- bc_dx_int %>% 
+  filter(agedx==age_interview | agedx==999) %>%
+  pull(dxdate) %>% 
+  ymd()
+# there are 15 failed to parse
 # get the location of NA
 # generate a new varaible for those NA's location
-date_dx_na <- which(is.na(date_dx))
+date_dx_na_loc <- which(is.na(date_dx))
+
 # view the date
-# pull(bc_dx_int,dxdate)[date_dx_na]
+bc_dx_int %>% 
+  filter(agedx==age_interview | agedx==999) %>% 
+  pull(dxdate) %>%
+  .[date_dx_na_loc]
 
 # create a variable year of diagnosis
-date_dx_yr <- year(date_dx) 
+date_dx_yr <- year(date_dx)  
 # it was formed by those who are successfully converted into date format
-
 # create a new variable for month of diagnosis
 date_dx_mth <- month(date_dx)
 
 # we need to fill value of year and month separately for those with missing month and day
 # generate a new variable year of diagnosis for those missing month and day
-date_dx_miss_yr <- pull(bc_dx_int,dxdate)[date_dx_na] %>% 
-  as.character() %>% substr(.,start = 1,stop = 4) %>% as.numeric()
+date_dx_miss_yr <- bc_dx_int %>% 
+  filter(agedx==age_interview | agedx==999) %>% 
+  pull(dxdate) %>%
+  .[date_dx_na_loc] %>% 
+  as.character() %>% 
+  substr(.,start = 1,stop = 4) %>% 
+  as.numeric()
 
 # generate a new variable month of diagnosis for those missing month and day
-date_dx_miss_mth <- pull(bc_dx_int,dxdate)[date_dx_na] %>% 
-  as.character() %>% substr(.,start = 5,stop = 6) %>% as.numeric()
+date_dx_miss_mth <- bc_dx_int %>% 
+  filter(agedx==age_interview | agedx==999) %>% 
+  pull(dxdate) %>%
+  .[date_dx_na_loc] %>% 
+  as.character() %>% 
+  substr(.,start = 5,stop = 6) %>% 
+  as.numeric()
 # there are lots of 99 in months
 # b/c some patients do not have info on months
 # to avoid error in comparation, change 99 to 6 (June)
 date_dx_miss_mth[which(date_dx_miss_mth==99)] <- 6
 
 # fill in the value into variable year of diagnosis
-for (i in 1:length(date_dx_na)) {
-    date_dx_yr[date_dx_na[i]] <- date_dx_miss_yr[i]
-    date_dx_mth[date_dx_na[i]] <- date_dx_miss_mth[i]
+for (i in 1:length(date_dx_na_loc)) {
+    date_dx_yr[date_dx_na_loc[i]] <- date_dx_miss_yr[i]
+    date_dx_mth[date_dx_na_loc[i]] <- date_dx_miss_mth[i]
 }
 
+# create a new tibble for subjects with missing agedx and equal agedx and age_interview
+bc_dx_int_tbl <- bc_dx_int %>% 
+  filter(agedx==age_interview | agedx==999)
+
 # add those variables in date format to bc_dx_int
-bc_dx_int <- add_column(bc_dx_int,
+bc_dx_int_tbl <- add_column(bc_dx_int_tbl,
                         date_int,date_int_yr,date_int_mth,date_int_two_mth,
                         .after = "dt_interview") %>% 
   add_column(.,
@@ -537,40 +659,23 @@ We will use 1 to denote patients whose diagnosed date is before or equal to inte
 
 * filtered by exact date
 
-```{r}
-bc_dx_int %>% mutate(diag_bef_intvw = case_when(
-  date_int < date_dx ~ 0,
-  date_int >= date_dx ~ 1)) %>% 
-  group_by(diag_bef_intvw) %>% 
+```{r echo=FALSE}
+# see the distribution of subjects whose dxdate is before or equal to date of interview
+bc_dx_int_tbl %>% mutate(dx_bf_int_2mth = case_when(
+  date_int_two_mth < date_dx ~ 0,
+  date_int_two_mth >= date_dx ~ 1)) %>% 
+  group_by(dx_bf_int_2mth) %>% 
   summarize(n=n()) 
 
 # based on the output, the column in date format can be more accurate
 # redefine the tibble
-bc_dx_int <- bc_dx_int %>% mutate(diag_bef_intvw = case_when(
-  date_int < date_dx ~ 0,
-  date_int >= date_dx ~ 1))
+bc_dx_int_tbl <- bc_dx_int_tbl %>% mutate(dx_bf_int_2mth = case_when(
+  date_int_two_mth < date_dx ~ 0,
+  date_int_two_mth >= date_dx ~ 1))
 
 ```
 
-There are 467 subjects with daignosed date after interview date, 1835 subjects with diagnosis date before or equal to interview date, and 637 subjects with NA. The NA is caused by missing value in month and day.
-
-Among those 467 subjects, we need to further check if they are diagnosed with breast cancer within 2 months after date of diagnosis.
-
-```{r}
-bc_dx_int %>% filter(diag_bef_intvw==0) %>% 
-  mutate(diag_bef_intvw_plus2mth = case_when(
-    date_dx > date_int_two_mth ~ 0,
-    date_dx <= date_int_two_mth ~1
-    )) %>% 
-  group_by(diag_bef_intvw_plus2mth) %>% 
-  summarize(n=n())
-  
-
-```
-
-There are 18 subjects with exact date whose diagnosed date is within 2 months after the interview date. 
-
-The other 449 subjects with exact date whose diagnosed date is after the interview dates (+2 months). 
+Among 310 subjects with missing agedx or equal agedx and age_interview, there are 18 subjects with daignosed date after interview date (+2 months), 277 subjects with diagnosis date before or equal to interview date (+2 months), and 15 subjects with NA. The NA is caused by missing value in month and day.
 
 For those who missed information on month and day, we can looked at year alternatively.
 
@@ -578,182 +683,162 @@ For those who missed information on month and day, we can looked at year alterna
 
 We used 1 to denote those who have equal interview and diagnosis year; 0 denoted those with unequal year of interview and diagnosis.
 
-```{r}
-# see the distribution of subjects without missing month and day but with equal year
-bc_dx_int %>% filter(is.na(diag_bef_intvw)) %>%  
-  mutate(diag_equl_intvw_yronly = case_when(
+```{r echo=FALSE}
+# see the distribution of subjects with missing in month and day but with equal year
+bc_dx_int_tbl %>% filter(is.na(dx_bf_int_2mth)) %>%  
+  mutate(dx_eql_int_yr = case_when(
   date_int_yr == date_dx_yr ~ 1,
   date_int_yr != date_dx_yr ~ 0)) %>% 
-  group_by(diag_equl_intvw_yronly) %>% 
+  group_by(dx_eql_int_yr) %>% 
   summarize(n=n())
 
-# keep the subjects with equal years as 0 
-# b/c we need to further make sure if we should exclude them.
-bc_dx_int <- bc_dx_int %>% mutate(diag_equl_intvw_yronly = case_when(
-  date_int_yr == date_dx_yr ~ 1,
-  date_int_yr != date_dx_yr ~ 0),
-  diag_bef_intvw_yronly = case_when(
-    date_int_yr > date_dx_yr ~ 1,
-    date_int_yr <= date_dx_yr ~ 0
+```
+
+There are 6 subjects with equal year of dx and interview and 9 subjects with unequal year of dx and interview.
+
+```{r echo=FALSE}
+# see the distribution of subjects without missing month and day
+bc_dx_int_tbl %>% filter(is.na(dx_bf_int_2mth)) %>%  
+  mutate(dx_bf_int_yr = case_when(
+  date_int_yr > date_dx_yr ~ 1,
+  date_int_yr < date_dx_yr ~ 0)) %>% 
+  group_by(dx_bf_int_yr) %>% 
+  summarize(n=n())
+
+```
+
+There is only 1 subject with smaller interview year; there are 8 subjects with greater interview year. 
+
+```{r include=FALSE}
+# add new variable indicated if year of dx is smaller than year of interview
+bc_dx_int_tbl <- bc_dx_int_tbl %>% 
+  mutate(dx_eql_int_yr = case_when(
+    date_int_yr == date_dx_yr ~ 1,
+    date_int_yr != date_dx_yr ~ 0),
+    dx_bf_int_yr = case_when(
+      date_int_yr > date_dx_yr ~ 1,
+      date_int_yr < date_dx_yr ~ 0
   ))
 
 ```
 
-We can see there are 22 subjects without exact date but equal years of interview and diagnosis, and 615 subjects without exact date but unequal years of interview and diagnosis. 
-
-We can deal with those 615 subjects by comparing years, but, for those 22 subjects, we need to compare their month.
 
 * filter by month for subjects with equal years of interview and diagnosis
 
-When looking at month, this will indicate if their diagnosis dates are before two months after interview date, because we don't need any subjects who were diagnosed within 2 months after interview date.
+Month will indicate if their diagnosis dates are before two months after interview date, because we don't need any subjects who were diagnosed within 2 months after interview date.
 
 We still need to see if there are subjects with equal years and months of interview (+2 months) and diagnosis. If so, we may ask for further information from data source. 
 
-```{r}
-bc_dx_int %>% filter(is.na(diag_bef_intvw)) %>% 
-  filter(diag_equl_intvw_yronly==1) %>% 
-  mutate(diag_equl_intvw_yr_mth = case_when(
+```{r echo=FALSE}
+# view how many subjects have equal year and equal month
+bc_dx_int_tbl %>% filter(is.na(dx_bf_int_2mth)) %>% 
+  filter(dx_eql_int_yr==1) %>% 
+  mutate(dx_eql_int_yr_mth = case_when(
     date_int_mth+2 == date_dx_mth ~ 1,
     date_int_mth+2 != date_dx_mth ~ 0
-  )) %>% group_by(diag_equl_intvw_yr_mth) %>% 
+  )) %>% group_by(dx_eql_int_yr_mth) %>% 
   summarize(n=n())
          
 ```
 
-There are 12 subjects with equal years but missing months. We need some help for those 12 subjects to see if we get the information on month.
-
-There are 14 subjects with equal years but different months of interview (+2 months) and diagnosis.
-
 There is no subject with equal years and equal months of interview (+2 months) and diagnosis.
-
-For those 12 subjects, we need more help!!! Or, we can just count them as missing date. It will lose power. We can keep them temporarily.
-
-```{r}
-bc_dx_int %>% filter(is.na(diag_bef_intvw)) %>% 
-  filter(diag_equl_intvw_yronly==1) %>% 
-  mutate(diag_equl_intvw_yr_mth = case_when(
-    date_int_mth+2 == date_dx_mth ~ 1,
-    date_int_mth+2 != date_dx_mth ~ 0
-  )) %>% filter(is.na(diag_equl_intvw_yr_mth))
-
-
-```
 
 Since there is no equal months of diagnosis and interview (+2 months), we can only include 'greater than' and 'smaller than' symbols in the code.
 
 There may be concerns about months because values of months can go over 12. However, if the months of interview (+2 months) go over 12, it indicated that the year of interview of this subject can be greater than the year of diagnosis. They will be denoted as 1 and be excluded. Therefore, no futher actions are needed.  
 
-```{r}
-bc_dx_int %>% filter(is.na(diag_bef_intvw)) %>% 
-  filter(diag_equl_intvw_yronly==1) %>% 
-  mutate(diag_bef_intvw_yr_mth = case_when(
+```{r echo=FALSE}
+bc_dx_int_tbl %>% filter(is.na(dx_bf_int_2mth)) %>% 
+  filter(dx_eql_int_yr==1) %>% 
+  mutate(dx_bf_int_yr_mth = case_when(
     date_int_mth+2 > date_dx_mth ~ 1,
     date_int_mth+2 < date_dx_mth ~ 0
-  )) %>% group_by(diag_bef_intvw_yr_mth) %>% 
+  )) %>% group_by(dx_bf_int_yr_mth) %>% 
   summarize(n=n())
 
 ```
 
-There are 4 subjects with equal years whose diagnosis months is later than interview months (+2 months).
+There are 2 subjects with equal years whose diagnosis months is later than interview months (+2 months).
 
-There are 10 subjects with equal years whose diagnosis months is earlier than interview months (+2 months).
+There are 4 subjects with equal years whose diagnosis months is earlier than interview months (+2 months).
 
-```{r}
+```{r echo=FALSE}
 # create a new variable for comparing months
-bc_dx_int <- bc_dx_int %>% mutate(diag_bef_intvw_yr_mth = case_when(
+bc_dx_int_tbl <- bc_dx_int_tbl %>% mutate(dx_bf_int_yr_mth = case_when(
   date_int_mth+2 > date_dx_mth ~ 1,
   date_int_mth+2 < date_dx_mth ~ 0
   ))
 
-# use the indicator variable we built before to exclude those before interview date and 2 months before interview date.
-# diag_bef_intvw indicate if the exact diagnosis date is before exact interview date
-# 0 was denoted as subjects whose exact diagnosis dates are after exact interview date
-# then, exclude those whose diagnosis dates are before interview day and interview date (+2 months)
-# we only need new_id, b/c we can use it to select the row from the whole dataset
-bc_int_bef_diag_id1 <- bc_dx_int %>% filter(diag_bef_intvw==0) %>% 
-  filter(date_int_two_mth < date_dx) %>% pull(new_id)
+```
 
-# filter out those without exact date
-# filtered by year using indicator variables 'diag_bef_intvw_yronly' and 'diag_bef_intvw_yronly'
-# diag_bef_intvw_yronly:
-# 0 was denoted as subjects whose diagnosis years are before or equal to interview years
-# diag_equl_intvw_yronly:
-# 0 was denoted as subjects whose diagnosis years are unequal to interview years
-bc_int_bef_diag_id2 <-  bc_dx_int %>% 
-  filter(is.na(diag_bef_intvw)) %>% 
-  filter(diag_bef_intvw_yronly==0) %>% 
-  filter(diag_equl_intvw_yronly==0) %>% 
+use the indicator variable we built before to exclude those before interview date and 2 months before interview date.
+
+```{r}
+# we only need new_id b/c we can use it to select the row from the whole dataset
+# create a new variable for id of subjects with exact date whose diagnosis date is after interview date (+2 months)
+bc_int_bf_dx_id1 <- bc_dx_int_tbl %>% 
+  filter(dx_bf_int_2mth==0) %>% 
   pull(new_id)
 
-# diag_equl_intvw_yronly:
-# 1 was denoted as subjects whose diagnosis years are equal to interview years
-# diag_bef_intvw_yr_month is an indicator variable that determine if diagnosis month is greater than interview month (+ 2 months)
-# diag_bef_intvw_yr_month: 
-# 0 was denoted as subjects whose diagnosis months are greater than interview month (+ 2 months)
-bc_int_bef_diag_id3 <- bc_dx_int %>% 
-  filter(is.na(diag_bef_intvw)) %>% 
-  filter(diag_equl_intvw_yronly==1) %>% 
-  filter(diag_bef_intvw_yr_mth==0) %>% 
+# create a new variable for id of subjects without exact date whose diagnosis year is after interview year
+bc_int_bf_dx_id2 <- bc_dx_int_tbl %>% 
+  filter(is.na(dx_bf_int_2mth)) %>% 
+  filter(dx_eql_int_yr==0) %>% 
+  filter(dx_bf_int_yr==0) %>% 
+  pull(new_id)
+
+# create a new variable for id of subjects without exact date whose diagnosis month is after interview month +2, given year are equal 
+bc_int_bf_dx_id3 <- bc_dx_int_tbl %>% 
+  filter(is.na(dx_bf_int_2mth)) %>% 
+  filter(dx_eql_int_yr==1) %>% 
+  filter(dx_bf_int_yr_mth==0) %>% 
   pull(new_id)
   
 # combine all subjects with date infomation whose diagnosis date is at least two months after interview date
-bc_int_bef_diag_id <- c(bc_int_bef_diag_id1,
-                        bc_int_bef_diag_id2,
-                        bc_int_bef_diag_id3)
+bc_data7_id <- c(bc_int_bf_dx_missdate_id,
+                 bc_dx_int_NA_agedxdate_id,
+                 bc_int_bf_dx_id,
+                 bc_int_bf_dx_id1,
+                 bc_int_bf_dx_id2,
+                 bc_int_bf_dx_id3)
 
 # get the number of subjects with date infomation whose diagnosis date is at least two months after interview date
-length(bc_int_bef_diag_id)
+length(bc_data7_id)
 
-# those 12 subjects are considered as missing
-bc_dx_int_missmth_id <- bc_dx_int %>% 
-  filter(is.na(diag_bef_intvw)) %>% 
-  filter(diag_equl_intvw_yronly==1) %>% 
-  filter(is.na(diag_bef_intvw_yr_mth)) %>% 
-  pull(new_id)
+# renew the bc_data7
+bc_data7 <- bc_data7 %>% 
+  filter(new_id %in% bc_data7_id)
 
 ```
 
-We already acquired 861 unique subject id with diagnosis date after interview date (+2 months).
+There are 7,012 subject left in the dataset.
 
-Now we need to compare those 861 subjects with subjects we got in bc_rx (questions about breast cancer diagnosis and mastectomy).
+### mastectomy
+
+Similar with breast cancer diagnosis, we check answers to the question of mastectomy first.
 
 ```{r}
-# we combine two id variable and see if there are duplicated values
-# both id variable are unique
-sum(duplicated(c(bc_rx_nobc_id,bc_int_bef_diag_id)))
-
-# there are 6 duplicated subjects
-which(duplicated(c(bc_rx_nobc_id,bc_int_bef_diag_id)))
-
-# we need to look at other 100 subjects who answered 'no' in their questions 
-# exclude those with exact date 
-bc_data7 %>% filter(new_id %in% bc_rx_nobc_id) %>% 
-  select(new_id,dt_interview,age_interview,agedx,dxdate,dxest) %>% 
-  filter(is.na(dxdate))
-
-bc_rx_nadx_id <- bc_data7 %>% filter(new_id %in% bc_rx_nobc_id) %>% 
-  select(new_id,dt_interview,age_interview,agedx,dxdate,dxest) %>% 
-  filter(is.na(dxdate)) %>% 
-  pull(new_id)
+# view the distribution of subjects who answered question of mastectomy
+bc_data7_exc_dx %>% group_by(br_surg_mas) %>% 
+  summarize(n=n())
 
 ```
 
-There are 16 subjects with NA in diagnosis date answered answer 'no', but We don't know if they were diagnosed within 2 months after interview.
+"1" was denoted as subjects who answered "yes" in the question; "2" was denoted as subjects who answered "no" in the question. 
 
-There are 106-16-6=84 sunjects who answered no in questions but could be excluded during previous process of exclusion by comparison.
+There are 2 subject who answered "yes" at the baseline. 
 
-We checked the id of 12 subjects with incomplete information of diagnosis date. There is no overlapped subjects.
+There are 12 subjects who answered "no" at the baseline.
+
+There are 6676 subjects with NA.
+
+We cannot directly remove subjects who answered "yes" before we check if they removed both sides of breast.
 
 ```{r}
-# we can confirm there are 877 subjects with diagnosis date before interview date. 
-bc_int_bef_diag_finid <- c(bc_int_bef_diag_id,bc_rx_nadx_id)
-
 
 
 
 ```
-
-
 
 
 

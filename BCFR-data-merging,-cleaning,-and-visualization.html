@@ -374,7 +374,7 @@ summary {
 <h1>Import dataset</h1>
 <p>All spreadsheets in xlsx dataset are converted into csv file separately, and each csv file is named with the name of spreadsheet.</p>
 <pre class="r"><code>## import dataset &#39;family membership.csv&#39;
-fam_mem &lt;- read_csv(&quot;./data/family_membership.csv&quot;) %&gt;% 
+fam_mem &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/family_membership.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -383,7 +383,7 @@ fam_mem &lt;- read_csv(&quot;./data/family_membership.csv&quot;) %&gt;%
 ##   FAMILY_ID = col_double()
 ## )</code></pre>
 <pre class="r"><code>## import dataset &#39;bc_epi.csv&#39;
-bc_epi &lt;- read_csv(&quot;./data/bc_epi.csv&quot;) %&gt;% 
+bc_epi &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/bc_epi.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -394,16 +394,16 @@ bc_epi &lt;- read_csv(&quot;./data/bc_epi.csv&quot;) %&gt;%
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
 <pre><code>## Warning: 12985 parsing failures.
-##  row           col           expected actual                file
-## 6083 AUS_EDUCATION 1/0/T/F/TRUE/FALSE      2 &#39;./data/bc_epi.csv&#39;
-## 6084 AUS_EDUCATION 1/0/T/F/TRUE/FALSE      4 &#39;./data/bc_epi.csv&#39;
-## 6085 AUS_EDUCATION 1/0/T/F/TRUE/FALSE      3 &#39;./data/bc_epi.csv&#39;
-## 6086 AUS_EDUCATION 1/0/T/F/TRUE/FALSE      3 &#39;./data/bc_epi.csv&#39;
-## 6087 AUS_EDUCATION 1/0/T/F/TRUE/FALSE      5 &#39;./data/bc_epi.csv&#39;
-## .... ............. .................. ...... ...................
+##  row           col           expected actual                                          file
+## 6083 AUS_EDUCATION 1/0/T/F/TRUE/FALSE      2 &#39;C:/Users/zzhao/Desktop/BCFR/data/bc_epi.csv&#39;
+## 6084 AUS_EDUCATION 1/0/T/F/TRUE/FALSE      4 &#39;C:/Users/zzhao/Desktop/BCFR/data/bc_epi.csv&#39;
+## 6085 AUS_EDUCATION 1/0/T/F/TRUE/FALSE      3 &#39;C:/Users/zzhao/Desktop/BCFR/data/bc_epi.csv&#39;
+## 6086 AUS_EDUCATION 1/0/T/F/TRUE/FALSE      3 &#39;C:/Users/zzhao/Desktop/BCFR/data/bc_epi.csv&#39;
+## 6087 AUS_EDUCATION 1/0/T/F/TRUE/FALSE      5 &#39;C:/Users/zzhao/Desktop/BCFR/data/bc_epi.csv&#39;
+## .... ............. .................. ...... .............................................
 ## See problems(...) for more details.</code></pre>
 <pre class="r"><code>## import dataset &#39;individual.csv&#39;
-indvd &lt;- read_csv(&quot;./data/individual.csv&quot;) %&gt;% 
+indvd &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/individual.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -414,16 +414,16 @@ indvd &lt;- read_csv(&quot;./data/individual.csv&quot;) %&gt;%
 ## )
 ## See spec(...) for full column specifications.</code></pre>
 <pre><code>## Warning: 6154 parsing failures.
-##   row      col           expected actual                    file
-##  1271 RACE_BR3 1/0/T/F/TRUE/FALSE     3  &#39;./data/individual.csv&#39;
-##  7229 RACE_BR3 1/0/T/F/TRUE/FALSE     04 &#39;./data/individual.csv&#39;
-##  7713 RACE_BR3 1/0/T/F/TRUE/FALSE     06 &#39;./data/individual.csv&#39;
-##  8916 RACE_BR3 1/0/T/F/TRUE/FALSE     98 &#39;./data/individual.csv&#39;
-## 11364 RACE_BR3 1/0/T/F/TRUE/FALSE     25 &#39;./data/individual.csv&#39;
-## ..... ........ .................. ...... .......................
+##   row      col           expected actual                                              file
+##  1271 RACE_BR3 1/0/T/F/TRUE/FALSE     3  &#39;C:/Users/zzhao/Desktop/BCFR/data/individual.csv&#39;
+##  7229 RACE_BR3 1/0/T/F/TRUE/FALSE     04 &#39;C:/Users/zzhao/Desktop/BCFR/data/individual.csv&#39;
+##  7713 RACE_BR3 1/0/T/F/TRUE/FALSE     06 &#39;C:/Users/zzhao/Desktop/BCFR/data/individual.csv&#39;
+##  8916 RACE_BR3 1/0/T/F/TRUE/FALSE     98 &#39;C:/Users/zzhao/Desktop/BCFR/data/individual.csv&#39;
+## 11364 RACE_BR3 1/0/T/F/TRUE/FALSE     25 &#39;C:/Users/zzhao/Desktop/BCFR/data/individual.csv&#39;
+## ..... ........ .................. ...... .................................................
 ## See problems(...) for more details.</code></pre>
 <pre class="r"><code>## import dataset &#39;nutrient.csv&#39;
-nutrnt &lt;- read_csv(&quot;./data/nutrient.csv&quot;) %&gt;% 
+nutrnt &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/nutrient.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -431,7 +431,7 @@ nutrnt &lt;- read_csv(&quot;./data/nutrient.csv&quot;) %&gt;%
 ## )
 ## See spec(...) for full column specifications.</code></pre>
 <pre class="r"><code>## import dataset &#39;bc_rx.csv&#39;
-bc_rx &lt;- read_csv(&quot;./data/bc_rx.csv&quot;) %&gt;% 
+bc_rx &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/bc_rx.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -444,7 +444,7 @@ bc_rx &lt;- read_csv(&quot;./data/bc_rx.csv&quot;) %&gt;%
 ##   BR_SURG_MAS = col_double()
 ## )</code></pre>
 <pre class="r"><code>## import dataset &#39;bc_surgery.csv&#39;
-bc_surgry &lt;- read_csv(&quot;./data/bc_surgery.csv&quot;) %&gt;% 
+bc_surgry &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/bc_surgery.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -469,7 +469,7 @@ bc_surgry &lt;- read_csv(&quot;./data/bc_surgery.csv&quot;) %&gt;%
 ##   HER2_SRC = col_double()
 ## )</code></pre>
 <pre class="r"><code>## import dataset &#39;bc_mutation.csv&#39;
-bc_mutat &lt;- read_csv(&quot;./data/bc_mutation.csv&quot;) %&gt;% 
+bc_mutat &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/bc_mutation.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -479,7 +479,7 @@ bc_mutat &lt;- read_csv(&quot;./data/bc_mutation.csv&quot;) %&gt;%
 ##   BRCA2_PERSON_STATUS = col_double()
 ## )</code></pre>
 <pre class="r"><code>## import dataset &#39;bc_epi_status.csv&#39;
-bc_epi_stat &lt;- read_csv(&quot;./data/bc_epi_status.csv&quot;) %&gt;% 
+bc_epi_stat &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/bc_epi_status.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -489,7 +489,7 @@ bc_epi_stat &lt;- read_csv(&quot;./data/bc_epi_status.csv&quot;) %&gt;%
 ##   FU_STATUS = col_double()
 ## )</code></pre>
 <pre class="r"><code>## import dataset &#39;pregnancy.csv&#39;
-pregncy &lt;- read_csv(&quot;./data/pregnancy.csv&quot;) %&gt;% 
+pregncy &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/pregnancy.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -506,7 +506,7 @@ pregncy &lt;- read_csv(&quot;./data/pregnancy.csv&quot;) %&gt;%
 ##   BF_TIME = col_double()
 ## )</code></pre>
 <pre class="r"><code>## import dataset &#39;cancer.csv&#39;
-cancer &lt;- read_csv(&quot;./data/cancer.csv&quot;) %&gt;% 
+cancer &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/cancer.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -522,7 +522,7 @@ cancer &lt;- read_csv(&quot;./data/cancer.csv&quot;) %&gt;%
 ##   DXEST = col_double()
 ## )</code></pre>
 <pre class="r"><code>## import dataset &#39;family.csv&#39;
-famly &lt;- read_csv(&quot;./data/family.csv&quot;) %&gt;% 
+famly &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/family.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -534,7 +534,7 @@ famly &lt;- read_csv(&quot;./data/family.csv&quot;) %&gt;%
 ##   ASHKENAZI = col_double()
 ## )</code></pre>
 <pre class="r"><code>## import dataset &#39;derived_var.csv&#39;
-derived_var &lt;- read_csv(&quot;./data/derived_var.csv&quot;) %&gt;% 
+derived_var &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/derived_var.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -545,7 +545,7 @@ derived_var &lt;- read_csv(&quot;./data/derived_var.csv&quot;) %&gt;%
 ##   Dg2_BCNr = col_double()
 ## )</code></pre>
 <pre class="r"><code>## import dataset &#39;bc_invasive.csv&#39;
-bc_invas &lt;- read_csv(&quot;./data/bc_invasive.csv&quot;) %&gt;% 
+bc_invas &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/bc_invasive.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -556,7 +556,7 @@ bc_invas &lt;- read_csv(&quot;./data/bc_invasive.csv&quot;) %&gt;%
 ##   GRADE_SCORE = col_double()
 ## )</code></pre>
 <pre class="r"><code>## import dataset &#39;bc_confirmation.csv&#39;
-bc_confirm &lt;- read_csv(&quot;./data/bc_confirmation.csv&quot;) %&gt;% 
+bc_confirm &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/bc_confirmation.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -567,7 +567,7 @@ bc_confirm &lt;- read_csv(&quot;./data/bc_confirmation.csv&quot;) %&gt;%
 ##   BR_DX_CONF = col_double()
 ## )</code></pre>
 <pre class="r"><code>## import dataset &#39;Hawaii_diet.csv&#39;
-hawaii_dt &lt;- read_csv(&quot;./data/Hawaii_diet.csv&quot;) %&gt;% 
+hawaii_dt &lt;- read_csv(&quot;C:/Users/zzhao/Desktop/BCFR/data/Hawaii_diet.csv&quot;) %&gt;% 
   janitor::clean_names()</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
@@ -596,14 +596,14 @@ hawaii_dt &lt;- read_csv(&quot;./data/Hawaii_diet.csv&quot;) %&gt;%
 ## )
 ## See spec(...) for full column specifications.</code></pre>
 <pre><code>## Warning: 1 parsing failure.
-##  row                  col           expected actual                     file
-## 8504 RED_MEAT_IN_SHOYU_FQ 1/0/T/F/TRUE/FALSE      4 &#39;./data/Hawaii_diet.csv&#39;</code></pre>
+##  row                  col           expected actual                                               file
+## 8504 RED_MEAT_IN_SHOYU_FQ 1/0/T/F/TRUE/FALSE      4 &#39;C:/Users/zzhao/Desktop/BCFR/data/Hawaii_diet.csv&#39;</code></pre>
 </div>
 <div id="merging-and-cleaning-dataset" class="section level1">
 <h1>merging and cleaning dataset</h1>
 <p>There are 31636 unique rows (subjects) in total. However, not all datasets have unique subjects or contain all subjects. The first step is to select important variable from these datasets, such as follow-up, nutrient, other confounding covariates.</p>
-<div id="merge-the-dataset-without-duplicated-rows." class="section level2">
-<h2>Merge the dataset without duplicated rows.</h2>
+<div id="merge-the-dataset-without-tumor-id." class="section level2">
+<h2>Merge the dataset without tumor id.</h2>
 <pre class="r"><code>## build a new dataset by binding fam_mem and bc_epi
 bc_data &lt;- left_join(fam_mem,bc_epi,by=&quot;new_id&quot;) %&gt;% 
   select(-c(center_no.y,aus_education))
@@ -701,6 +701,212 @@ bc_data_exc_aus %&gt;% group_by(center_no) %&gt;%
 </table>
 <p>The table above showed the distribution of patients after we exclude the patient from Australia.</p>
 </div>
+<div id="exclude-participants-who-did-not-complete-questionnaires" class="section level2">
+<h2>Exclude participants who did not complete questionnaires</h2>
+<pre class="r"><code># Extract id and variables of questionnaires and nutrients
+# view the distribution of subjects who complete epi questionnaires
+bc_data_exc_aus %&gt;% select(new_id,epi_q_breast,diet_q_hi,
+                           calories_in_food,
+                           satur_fat_in_food,monounsat_fat_in_food,
+                           food_group_veg_exc_legumes,
+                           food_group_potatoes_tubers,
+                           total_grain,whole_grain,
+                           food_group_all_fruits_inc_juice,
+                           food_group_fruit_juice_only,
+                           total_fruit,
+                           food_group_nuts,
+                           food_group_all_dairy,
+                           alcohol_in_food,
+                           food_group_redmeat_nonprocessed,
+                           food_group_processed_redmeat,
+                           food_group_poultry,
+                           food_group_processed_poultry,
+                           food_group_legumes,
+                           fish_only) %&gt;% 
+  group_by(epi_q_breast) %&gt;% 
+  summarize(n=n())</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##   epi_q_breast     n
+##          &lt;dbl&gt; &lt;int&gt;
+## 1            3 18160</code></pre>
+<p>Based on the table, there are 18160 subjects with “3”. “3” was denotes as subject who completed epi questionnaires personally. No one should be excluded.</p>
+<pre class="r"><code># view the distribution of subjects who complete hawaii diet questionnaires
+bc_data_exc_aus %&gt;% select(new_id,epi_q_breast,diet_q_hi,
+                           calories_in_food,
+                           satur_fat_in_food,monounsat_fat_in_food,
+                           food_group_veg_exc_legumes,
+                           food_group_potatoes_tubers,
+                           total_grain,whole_grain,
+                           food_group_all_fruits_inc_juice,
+                           food_group_fruit_juice_only,
+                           total_fruit,
+                           food_group_nuts,
+                           food_group_all_dairy,
+                           alcohol_in_food,
+                           food_group_redmeat_nonprocessed,
+                           food_group_processed_redmeat,
+                           food_group_poultry,
+                           food_group_processed_poultry,
+                           food_group_legumes,
+                           fish_only) %&gt;% 
+  group_by(diet_q_hi) %&gt;% 
+  summarize(n=n())</code></pre>
+<pre><code>## # A tibble: 7 x 2
+##   diet_q_hi     n
+##       &lt;dbl&gt; &lt;int&gt;
+## 1         0   935
+## 2         1     2
+## 3         2   493
+## 4         3 12613
+## 5         5   711
+## 6         6   120
+## 7        NA  3286</code></pre>
+<ul>
+<li><p>“0” was denoted as subjects who are not applicable. There are 935 subjects who are not applicable. They should be excluded.</p></li>
+<li><p>“1” was denoted as subjects who need questionnaire but were not requested yet. There are 2 of them. They should be exluded.</p></li>
+<li><p>“2” was denoted as subjects who has pending, requested questionnaires. There are 493 of them. They should be exluded.</p></li>
+<li><p>“3” was denoted as subjects who complete questionnaire personally and their responses were received. There are 12,613 of them. They should be kept in our study.</p></li>
+<li><p>“5” was denoted as subjects who refused to complete questionnaires. There are 711 of them. They should be excluded.</p></li>
+<li><p>“6” was denoted as subject with disabilities or language problems. We failed to get questionares from them. There are 120 of them. They should be excluded.</p></li>
+<li><p>There are 3286 missing responses which need further revision.</p></li>
+</ul>
+<pre class="r"><code>bc_data_exc_aus %&gt;% filter(is.na(diet_q_hi)) %&gt;% 
+  select(new_id,epi_q_breast,diet_q_hi,
+                           calories_in_food,
+                           satur_fat_in_food,monounsat_fat_in_food,
+                           food_group_veg_exc_legumes,
+                           food_group_potatoes_tubers,
+                           total_grain,whole_grain,
+                           food_group_all_fruits_inc_juice,
+                           food_group_fruit_juice_only,
+                           total_fruit,
+                           food_group_nuts,
+                           food_group_all_dairy,
+                           alcohol_in_food,
+                           food_group_redmeat_nonprocessed,
+                           food_group_processed_redmeat,
+                           food_group_poultry,
+                           food_group_processed_poultry,
+                           food_group_legumes,
+                           fish_only)</code></pre>
+<pre><code>## # A tibble: 3,286 x 22
+##    new_id epi_q_breast diet_q_hi calories_in_food satur_fat_in_fo~
+##     &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1   1655            3        NA            3544.             50.6
+##  2   1656            3        NA            1976.             23.1
+##  3   1657            3        NA            1819.             24.6
+##  4   1658            3        NA            1600.             16.1
+##  5   1659            3        NA            2472.             21.2
+##  6   1660            3        NA            2260.             26.4
+##  7   1661            3        NA            1899.             19.1
+##  8   1662            3        NA            2297.             16.2
+##  9   1663            3        NA            1541.             18.4
+## 10   1664            3        NA            1938.             28.9
+## # ... with 3,276 more rows, and 17 more variables:
+## #   monounsat_fat_in_food &lt;dbl&gt;, food_group_veg_exc_legumes &lt;dbl&gt;,
+## #   food_group_potatoes_tubers &lt;dbl&gt;, total_grain &lt;dbl&gt;,
+## #   whole_grain &lt;dbl&gt;, food_group_all_fruits_inc_juice &lt;dbl&gt;,
+## #   food_group_fruit_juice_only &lt;dbl&gt;, total_fruit &lt;dbl&gt;,
+## #   food_group_nuts &lt;dbl&gt;, food_group_all_dairy &lt;dbl&gt;,
+## #   alcohol_in_food &lt;dbl&gt;, food_group_redmeat_nonprocessed &lt;dbl&gt;,
+## #   food_group_processed_redmeat &lt;dbl&gt;, food_group_poultry &lt;dbl&gt;,
+## #   food_group_processed_poultry &lt;dbl&gt;, food_group_legumes &lt;dbl&gt;,
+## #   fish_only &lt;dbl&gt;</code></pre>
+<p>After further check, although most of them do not have responses (NA), we do have their information of nutrients. We cannot exclude them directly.</p>
+<p>Only exclude those with missing information in nutrient.</p>
+<pre class="r"><code># extract id of those without missing info in nutrient variables
+bc_data_dietq_na_id &lt;- bc_data_exc_aus %&gt;% filter(is.na(diet_q_hi)) %&gt;% 
+  select(new_id,calories_in_food,
+         satur_fat_in_food,monounsat_fat_in_food,
+         food_group_veg_exc_legumes,
+         food_group_potatoes_tubers,
+         total_grain,whole_grain,
+         food_group_all_fruits_inc_juice,
+         food_group_fruit_juice_only,
+         total_fruit,food_group_nuts,
+         food_group_all_dairy,
+         alcohol_in_food,
+         food_group_redmeat_nonprocessed,
+         food_group_processed_redmeat,
+         food_group_poultry,
+         food_group_processed_poultry,
+         food_group_legumes,fish_only) %&gt;% 
+  drop_na() %&gt;% pull(new_id)
+
+# see if there are missing info in nutrient variables
+bc_data_exc_aus %&gt;% filter(diet_q_hi==3) %&gt;% 
+  select(new_id,epi_q_breast,diet_q_hi,
+                           calories_in_food,
+                           satur_fat_in_food,monounsat_fat_in_food,
+                           food_group_veg_exc_legumes,
+                           food_group_potatoes_tubers,
+                           total_grain,whole_grain,
+                           food_group_all_fruits_inc_juice,
+                           food_group_fruit_juice_only,
+                           total_fruit,
+                           food_group_nuts,
+                           food_group_all_dairy,
+                           alcohol_in_food,
+                           food_group_redmeat_nonprocessed,
+                           food_group_processed_redmeat,
+                           food_group_poultry,
+                           food_group_processed_poultry,
+                           food_group_legumes,
+                           fish_only) %&gt;% 
+  drop_na()</code></pre>
+<pre><code>## # A tibble: 11,900 x 22
+##    new_id epi_q_breast diet_q_hi calories_in_food satur_fat_in_fo~
+##     &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1      2            3         3              902                6
+##  2      7            3         3             2679               39
+##  3      9            3         3             2051               24
+##  4     10            3         3             2129               22
+##  5     11            3         3             2415               35
+##  6     14            3         3             2792               38
+##  7     15            3         3             1619                9
+##  8     16            3         3             1539               17
+##  9     17            3         3             1808               16
+## 10     18            3         3             2716               20
+## # ... with 11,890 more rows, and 17 more variables:
+## #   monounsat_fat_in_food &lt;dbl&gt;, food_group_veg_exc_legumes &lt;dbl&gt;,
+## #   food_group_potatoes_tubers &lt;dbl&gt;, total_grain &lt;dbl&gt;,
+## #   whole_grain &lt;dbl&gt;, food_group_all_fruits_inc_juice &lt;dbl&gt;,
+## #   food_group_fruit_juice_only &lt;dbl&gt;, total_fruit &lt;dbl&gt;,
+## #   food_group_nuts &lt;dbl&gt;, food_group_all_dairy &lt;dbl&gt;,
+## #   alcohol_in_food &lt;dbl&gt;, food_group_redmeat_nonprocessed &lt;dbl&gt;,
+## #   food_group_processed_redmeat &lt;dbl&gt;, food_group_poultry &lt;dbl&gt;,
+## #   food_group_processed_poultry &lt;dbl&gt;, food_group_legumes &lt;dbl&gt;,
+## #   fish_only &lt;dbl&gt;</code></pre>
+<p>There won’t be any na in id, epi questionnaire, and diet questionnaire variables, so we we can directly drop the na rows in the nutrient variable.</p>
+<p>There are 11,900 rows after we drop rows with NA.</p>
+<p>There are 12,613 - 11,900 = 713 subjects with missing info in nutrient variables.</p>
+<pre class="r"><code># extract id of subjects who complete hawaii diet questionnaire without missing info of nutrient
+bc_data_dietq3_id &lt;- bc_data_exc_aus %&gt;% filter(diet_q_hi==3) %&gt;% 
+  select(new_id,epi_q_breast,diet_q_hi,
+                           calories_in_food,
+                           satur_fat_in_food,monounsat_fat_in_food,
+                           food_group_veg_exc_legumes,
+                           food_group_potatoes_tubers,
+                           total_grain,whole_grain,
+                           food_group_all_fruits_inc_juice,
+                           food_group_fruit_juice_only,
+                           total_fruit,
+                           food_group_nuts,
+                           food_group_all_dairy,
+                           alcohol_in_food,
+                           food_group_redmeat_nonprocessed,
+                           food_group_processed_redmeat,
+                           food_group_poultry,
+                           food_group_processed_poultry,
+                           food_group_legumes,
+                           fish_only) %&gt;% 
+  drop_na() %&gt;% pull(new_id)
+
+# use two id variables to get subjects who complete epi and diet questionnaires
+bc_data_epi_diet_q &lt;- bc_data_exc_aus %&gt;% 
+  filter(new_id %in% c(bc_data_dietq_na_id,bc_data_dietq3_id))</code></pre>
+<p>There are 14965 subjects left after we excluding subjects who didn’t complete epi or diet questionnaire for different reasons.</p>
+</div>
 <div id="exclude-patient-who-were-diagnosed-with-breast-cancer-or-had-surgery-of-mastectomy-before-the-date-of-interview." class="section level2">
 <h2>Exclude patient who were diagnosed with breast cancer or had surgery of mastectomy before the date of interview.</h2>
 <div id="breast-cancer-diagnosis" class="section level3">
@@ -709,68 +915,24 @@ bc_data_exc_aus %&gt;% group_by(center_no) %&gt;%
 <pre class="r"><code># there are some patients missed these two questions
 # we only exclude people who answered yes
 # brca: 2 was denoted as those who answered no
-# br_surg_mas: same as above
 # 8 and 9 denoted not asked and missing
-bc_data_exc_diag_mas &lt;- bc_data_exc_aus %&gt;% 
-  filter(is.na(brca)|brca %in% c(2,8,9)) %&gt;% 
-  filter(is.na(br_surg_mas)|br_surg_mas %in% c(2,8,9))
+bc_data_exc_diag &lt;- bc_data_epi_diet_q %&gt;% 
+  filter(is.na(brca)|brca %in% c(2,8,9))
 
 ## see the distribution of people without diagnosis of breast cancer and mastectomy
-bc_data_exc_diag_mas %&gt;% group_by(brca) %&gt;% 
-  summarize(freq = n()) %&gt;% 
-  knitr::kable()</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="right">brca</th>
-<th align="right">freq</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">2</td>
-<td align="right">106</td>
-</tr>
-<tr class="even">
-<td align="right">NA</td>
-<td align="right">11194</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>bc_data_exc_diag_mas %&gt;% group_by(br_surg_mas) %&gt;% 
-  summarize(freq = n()) %&gt;% 
-  knitr::kable()</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="right">br_surg_mas</th>
-<th align="right">freq</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">2</td>
-<td align="right">81</td>
-</tr>
-<tr class="even">
-<td align="right">NA</td>
-<td align="right">11219</td>
-</tr>
-</tbody>
-</table>
-<p>There are 106 subjects who answered ‘no’ in the question about breast cancer diagnosis.</p>
-<p>There are 81 subjects who answered ‘no’ in the question about mastectomy.</p>
-<p>There isn’t any any subjects who answered ‘yes’. Or they can be unreported.</p>
-<p>We can observe there are more than 10,000 patients with NA. We cannot exclude them. We still need to check their date of diagnosis.</p>
+bc_data_exc_diag %&gt;% group_by(brca) %&gt;% 
+  summarize(freq = n())</code></pre>
+<pre><code>## # A tibble: 2 x 2
+##    brca  freq
+##   &lt;dbl&gt; &lt;int&gt;
+## 1     2    68
+## 2    NA  8876</code></pre>
+<p>After excluding subjects who answered ‘yes’, there are 68 subjects who answered ‘no’ in the question about breast cancer diagnosis. There are 8876 subjects with NA. We cannot exclude them. We still need to check their date of diagnosis.</p>
 <p>Extract the id number of subjects who answered no in breast cancer and mastectomy.</p>
 <pre class="r"><code># create a new variable that included id of those who answered no in breast cancer diagnosis question
-bc_rx_nobc_id &lt;- bc_data_exc_diag_mas %&gt;% filter(brca==2) %&gt;% 
-  pull(new_id)
-
-# create a new variable that included id of those who answered no in mastectomy question
-bc_rx_nomas_id &lt;- bc_data_exc_diag_mas %&gt;% filter(br_surg_mas==2) %&gt;% 
+bc_rx_nobc_id &lt;- bc_data_exc_diag %&gt;% filter(brca==2) %&gt;% 
   pull(new_id)</code></pre>
-<p>To get the date of diagnosis, we need to get information from cancer.csv. Eliminate the duplicated subjects by only selecting the earliest disgnosis date. Merge with bc_data_exc_diag_mas.</p>
+<p>To get the date of diagnosis, we need to get information from cancer.csv. Eliminate the duplicated subjects by only selecting the earliest disgnosis date. Merge with bc_data_exc_diag.</p>
 <pre class="r"><code># diagnose date of breast cancer
 # data is from cancer.csv
 # some patients could get more than one tumor, only use the earliest
@@ -778,9 +940,12 @@ dt_dx &lt;- pull(cancer,dxdate) %&gt;% ymd() # convert into date format</code></
 <pre><code>## Warning: 4904 failed to parse.</code></pre>
 <pre class="r"><code># there are 4904 answers that cannot be converted into time formart
 na_check &lt;- which(is.na(dt_dx)) # get row number of missing date information
+
 # create a table to see distribution
-cancer[na_check,] %&gt;% select(dxdate) %&gt;% 
-  group_by(dxdate) %&gt;% summarize(n=n())</code></pre>
+cancer[na_check,] %&gt;% 
+  select(dxdate) %&gt;% 
+  group_by(dxdate) %&gt;% 
+  summarize(n=n())</code></pre>
 <pre><code>## # A tibble: 476 x 2
 ##      dxdate     n
 ##       &lt;dbl&gt; &lt;int&gt;
@@ -795,13 +960,11 @@ cancer[na_check,] %&gt;% select(dxdate) %&gt;%
 ##  9 19559999     1
 ## 10 19570399     1
 ## # ... with 466 more rows</code></pre>
-<pre class="r"><code># the distribution of missing date is not good, 
-# b/c there are so many missing month and day
-# we can eliminate the duplicated subjects by selecting the smallest dxdate 
-# for those with multiple tumor sites with equal diagnose date, only keep one of them
-# some only have age at diagnosis without date and they have more than one tumor 
-# pick the smallest age at diagnosis
-# we prefer the smallest dxest b/c it is the most accurate
+<p>The distribution of missing date is not good because there are so many missing month and day.</p>
+<p>We can eliminate the duplicated subjects by selecting the smallest dxdate</p>
+<p>For those with multiple tumor sites with equal diagnose date, only keep one of them. Some only have age at diagnosis without date and they have more than one tumor</p>
+<p>Pick the smallest age at diagnosis. We prefer the smallest dxest because it is the most accurate</p>
+<pre class="r"><code># create a new dataset without duplicated subject id by picked smallest dxdate
 cancer_data_dx &lt;- cancer %&gt;% 
   filter(center_no %in% c(1,2,3,5,6)) %&gt;% 
   select(new_id,agedx,dxdate,dxest) %&gt;% 
@@ -820,8 +983,8 @@ sum(duplicated(cancer_data_dx[,1]))</code></pre>
 cancer_data_dx &lt;- select(cancer_data_dx,-c(min_dxAge,early_dxdate,min_dxest))
 
 # we can merge the cancer data with the data without breast cancer and mas
-bc_data7 &lt;- left_join(bc_data_exc_diag_mas,cancer_data_dx,by=&quot;new_id&quot;)</code></pre>
-<p>There is a hiding process above I didn’t choose to show here. During the filtration of cancer_data_dx, we cannot directly let age of diagnosis equal to the smallest one for each subject id because there are some subjects have different age at diagnosis but exactly same diagnosis date. However, there is only one subject with this problem. After substracted date of diagnosis by date of birth, I find out we can use the smallest age at diagnosis.</p>
+bc_data7 &lt;- left_join(bc_data_exc_diag,cancer_data_dx,by=&quot;new_id&quot;)</code></pre>
+<p>There is a hiding process above I didn’t choose to show here. During the filtration of cancer_data_dx, we cannot directly let age of diagnosis equal to the smallest one for each subject id, because there are some subjects have different age at diagnosis but exactly same diagnosis date. However, there is only one subject with this problem. After substracted date of diagnosis by date of birth, I find out we can use the smallest age at diagnosis.</p>
 <p>Compare the dxdate and dt_interview among subjects with non-missing date (not fully missing).</p>
 <pre class="r"><code># there isn&#39;t not asked code 88888888
 # remove missing and NA
@@ -840,25 +1003,13 @@ bc_data7 %&gt;% filter(dxdate!=99999999) %&gt;%
 <pre><code>## # A tibble: 2 x 2
 ##   diag_bef_intvw     n
 ##            &lt;dbl&gt; &lt;int&gt;
-## 1              0   903
-## 2              1  2635</code></pre>
-<p>Except NA and missing, there are 2635 subjects with diagnosis date before interview date and 903 subjects with diagnosis date after interview date. We only keep subjects with diagnosis date after interview date.</p>
-<p>We also need to exclude patients who were diagnosed after interview date within two months.</p>
+## 1              0   736
+## 2              1  2203</code></pre>
 <pre class="r"><code># create a new tibble with interview date and diagnosis date
 bc_dx_int &lt;- bc_data7 %&gt;% filter(dxdate!=99999999) %&gt;% 
   filter(!is.na(dxdate)) %&gt;% 
-  select(new_id,dt_interview,age_interview,agedx,dxdate)
-# create a table to look at the distribution of subjects
-bc_dx_int %&gt;% mutate(diag_bef_intvw = case_when(
-  dxdate &lt;= dt_interview ~ 1,
-  dxdate &gt; dt_interview ~ 0)) %&gt;% 
-  group_by(diag_bef_intvw) %&gt;% 
-  summarize(n=n())</code></pre>
-<pre><code>## # A tibble: 2 x 2
-##   diag_bef_intvw     n
-##            &lt;dbl&gt; &lt;int&gt;
-## 1              0   903
-## 2              1  2635</code></pre>
+  select(new_id,dt_interview,age_interview,agedx,dxdate)</code></pre>
+<p>Except NA and missing, there are 2203 subjects with diagnosis date before interview date and 736 subjects with diagnosis date after interview date. We only keep subjects with diagnosis date after interview date.</p>
 <p>According to the process above, there could be missing month and day in diagnosis date for some subjects and 99 or 9999 can always be greater than those with normal date. We may overestimate the number of subjects with diagnosis date after interview date.</p>
 <p>Next step, we are going to extract date information and convert them into date format. The specific variable of year and month are created to identify those with missing month or day.</p>
 <pre class="r"><code># extract interview date and convert to date format
@@ -867,17 +1018,21 @@ date_int &lt;- pull(bc_dx_int,dt_interview) %&gt;% ymd()</code></pre>
 <pre class="r"><code># there is one failed to parse, shown as NA
 # see the location of NA
 which(is.na(date_int))</code></pre>
-<pre><code>## [1] 2327</code></pre>
+<pre><code>## [1] 1933</code></pre>
 <pre class="r"><code># view the exact date
-pull(bc_dx_int,dt_interview)[2327]</code></pre>
+pull(bc_dx_int,dt_interview)[1933]</code></pre>
 <pre><code>## [1] 19979999</code></pre>
 <pre class="r"><code># month and day are missing, shown as 9999
+
 # create a new variable for year of interview
 date_int_yr &lt;- year(date_int)
-date_int_yr[2327] &lt;- 1997
+date_int_yr[1933] &lt;- 1997
+
 # create a new variable month of interview
-# there is one NA in 2327th subject because of missing in month
+# there is one NA in 1933rd subject because of missing in month
 date_int_mth &lt;- month(date_int)
+# for those missing in month, we used June instead
+date_int_mth[1933] &lt;- 6
 
 # we also need the time point &#39;two months after diagnosis&#39;
 # b/c subjects diagnosed within two months after interview should be excluded
@@ -886,189 +1041,24 @@ date_int_mth &lt;- month(date_int)
 # we choose to add 61 days (30.5 days / month)
 date_int_two_mth &lt;- date_int + ddays(61)
 
+#########################################################################
+
+# create a new variable
 # extract diagnosis date and convert it into date format
 date_dx &lt;- pull(bc_dx_int,dxdate) %&gt;% ymd()</code></pre>
-<pre><code>## Warning: 788 failed to parse.</code></pre>
-<pre class="r"><code># there are 788 failed to parse
+<pre><code>## Warning: 636 failed to parse.</code></pre>
+<pre class="r"><code># there are 636 failed to parse
+
 # get the location of NA
-which(is.na(date_dx))</code></pre>
-<pre><code>##   [1] 1242 1243 1245 1249 1253 1260 1269 1270 1285 1296 1306 1310 1322 1330
-##  [15] 1371 1373 1380 1733 1734 1739 1742 1746 1749 1754 1757 1762 1763 1764
-##  [29] 1766 1767 1771 1782 1793 1799 1802 1804 1805 1806 1807 1808 1809 1812
-##  [43] 1813 1816 1823 1830 1832 1834 1840 1844 1848 1852 1856 1857 1858 1863
-##  [57] 1867 1869 1870 1872 1873 1881 1882 1883 1885 1890 1900 1905 1907 1911
-##  [71] 1912 1913 1915 1916 1917 1919 1920 1923 1926 1927 1928 1930 1931 1932
-##  [85] 1936 1937 1940 1941 1951 1952 1956 1957 1958 1959 1961 1963 1966 1968
-##  [99] 1969 1972 1973 1976 1979 1981 1982 1984 1985 1987 1988 1993 1996 1998
-## [113] 2001 2004 2006 2013 2015 2016 2018 2020 2021 2022 2023 2026 2028 2032
-## [127] 2033 2034 2035 2036 2037 2039 2040 2042 2049 2050 2056 2058 2060 2068
-## [141] 2073 2074 2075 2077 2083 2084 2086 2087 2089 2091 2092 2107 2114 2117
-## [155] 2118 2121 2124 2125 2129 2140 2141 2145 2147 2148 2149 2151 2153 2155
-## [169] 2162 2163 2174 2177 2178 2183 2184 2186 2191 2197 2205 2206 2208 2210
-## [183] 2212 2217 2220 2221 2225 2226 2227 2230 2232 2233 2239 2241 2255 2256
-## [197] 2257 2261 2262 2264 2267 2268 2269 2281 2282 2285 2286 2289 2290 2301
-## [211] 2307 2311 2313 2321 2324 2328 2331 2335 2336 2337 2342 2346 2348 2349
-## [225] 2350 2353 2354 2358 2359 2365 2370 2371 2375 2380 2382 2385 2388 2390
-## [239] 2391 2393 2394 2395 2396 2397 2398 2402 2403 2404 2405 2406 2407 2409
-## [253] 2410 2411 2413 2414 2415 2417 2419 2420 2421 2422 2425 2427 2428 2429
-## [267] 2430 2431 2432 2433 2434 2439 2441 2442 2445 2447 2448 2449 2454 2455
-## [281] 2459 2460 2462 2463 2464 2465 2467 2470 2475 2476 2477 2479 2482 2484
-## [295] 2485 2487 2491 2492 2494 2496 2499 2501 2502 2505 2507 2509 2511 2516
-## [309] 2517 2518 2520 2524 2525 2528 2529 2531 2532 2534 2535 2538 2539 2543
-## [323] 2552 2554 2558 2560 2561 2566 2567 2569 2571 2572 2578 2581 2582 2583
-## [337] 2584 2587 2590 2591 2596 2598 2601 2603 2604 2610 2612 2613 2614 2615
-## [351] 2617 2622 2626 2628 2630 2632 2633 2635 2637 2638 2639 2640 2642 2643
-## [365] 2644 2645 2646 2648 2654 2655 2657 2659 2660 2661 2662 2666 2669 2670
-## [379] 2671 2673 2675 2678 2681 2683 2684 2685 2686 2687 2690 2692 2693 2694
-## [393] 2695 2696 2697 2702 2703 2705 2712 2714 2716 2719 2720 2722 2725 2727
-## [407] 2728 2729 2731 2732 2735 2737 2742 2746 2747 2748 2750 2751 2752 2756
-## [421] 2761 2762 2766 2768 2769 2770 2774 2775 2776 2778 2779 2783 2785 2786
-## [435] 2789 2790 2794 2797 2799 2800 2803 2804 2805 2806 2807 2809 2810 2811
-## [449] 2814 2817 2819 2820 2824 2825 2827 2830 2831 2834 2835 2836 2838 2842
-## [463] 2843 2849 2851 2856 2857 2861 2862 2863 2866 2868 2869 2870 2872 2873
-## [477] 2878 2880 2883 2884 2886 2887 2890 2891 2892 2894 2896 2897 2899 2900
-## [491] 2906 2907 2908 2910 2911 2913 2915 2916 2918 2922 2923 2927 2929 2931
-## [505] 2932 2934 2935 2936 2938 2939 2944 2947 2948 2949 2950 2952 2954 2956
-## [519] 2959 2960 2963 2970 2971 2972 2975 2976 2977 2984 2985 2989 2990 2993
-## [533] 2994 2996 3001 3002 3008 3009 3013 3015 3018 3019 3020 3023 3026 3027
-## [547] 3028 3030 3034 3035 3036 3039 3040 3041 3043 3052 3056 3059 3060 3063
-## [561] 3065 3066 3067 3071 3072 3073 3074 3077 3084 3085 3086 3088 3094 3095
-## [575] 3099 3100 3107 3112 3114 3115 3118 3122 3125 3126 3128 3133 3136 3137
-## [589] 3138 3139 3140 3145 3148 3152 3153 3154 3158 3161 3163 3164 3166 3170
-## [603] 3172 3176 3179 3182 3183 3186 3190 3191 3192 3200 3202 3205 3206 3207
-## [617] 3210 3212 3213 3215 3218 3220 3221 3225 3226 3227 3228 3232 3234 3236
-## [631] 3237 3238 3239 3241 3247 3250 3251 3253 3254 3261 3263 3268 3269 3270
-## [645] 3271 3274 3278 3281 3283 3284 3285 3287 3290 3291 3292 3293 3296 3297
-## [659] 3298 3300 3301 3302 3305 3308 3310 3312 3313 3314 3316 3317 3319 3320
-## [673] 3325 3330 3331 3332 3334 3336 3337 3338 3339 3343 3345 3348 3351 3354
-## [687] 3356 3357 3359 3366 3371 3372 3375 3376 3377 3378 3379 3380 3381 3384
-## [701] 3388 3390 3391 3392 3401 3405 3406 3410 3412 3413 3414 3415 3421 3424
-## [715] 3425 3427 3432 3434 3435 3439 3440 3442 3443 3444 3445 3448 3449 3454
-## [729] 3455 3456 3458 3460 3464 3465 3466 3468 3469 3470 3471 3472 3473 3474
-## [743] 3475 3477 3479 3480 3481 3482 3484 3485 3486 3487 3488 3489 3490 3492
-## [757] 3493 3495 3496 3499 3500 3501 3502 3503 3504 3505 3506 3507 3508 3511
-## [771] 3512 3513 3515 3516 3518 3519 3520 3521 3522 3523 3526 3527 3532 3533
-## [785] 3534 3535 3536 3537</code></pre>
-<pre class="r"><code># generate a new varaible for those NA&#39;s location
+# generate a new varaible for those NA&#39;s location
 date_dx_na &lt;- which(is.na(date_dx))
 # view the date
-pull(bc_dx_int,dxdate)[date_dx_na]</code></pre>
-<pre><code>##   [1] 19859999 20159999 19889999 19579999 19989999 19849999 19810499
-##   [8] 19909999 20170399 20100299 19899999 20130399 20109999 20039999
-##  [15] 20029999 20009999 20019999 19969999 20079999 20030699 19979999
-##  [22] 20029999 19919999 19990699 20049999 20149999 19969999 20120199
-##  [29] 20099999 20089999 20100599 20039999 20079999 19870799 19799999
-##  [36] 19969999 19709999 20079999 19771299 19969999 19969999 20009999
-##  [43] 19919999 19859999 19639999 20069999 19700199 20009999 20019999
-##  [50] 19940199 19779999 19969999 20071199 19781199 19869999 20110499
-##  [57] 20069999 20049999 20040499 20079999 19929999 20009999 20109999
-##  [64] 20119999 19939999 19699999 20029999 20129999 19949999 20019999
-##  [71] 19999999 19879999 20060299 19889999 20069999 20049999 20121099
-##  [78] 19999999 20120299 20120999 19989999 20079999 20100899 19759999
-##  [85] 20080799 19539999 19989999 20129999 20029999 20040299 19570399
-##  [92] 20099999 20040799 20010799 20050699 20111199 19629999 19559999
-##  [99] 19719999 20029999 20119999 19849999 19969999 20079999 19940999
-## [106] 20099999 20011299 20070699 20069999 20129999 19989999 20079999
-## [113] 19799999 20009999 20119999 19969999 20099999 20059999 20119999
-## [120] 20030199 19869999 20109999 20081199 20109999 20069999 19979999
-## [127] 20089999 19949999 19829999 19959999 20079999 19949999 20079999
-## [134] 20089999 19749999 20089999 19550399 20111199 19859999 20049999
-## [141] 20020799 20109999 20049999 20030399 20100799 20021199 19819999
-## [148] 20050199 19819999 19990399 19981099 20119999 20049999 20109999
-## [155] 20079999 19989999 20139999 19849999 20129999 20109999 19929999
-## [162] 20100699 20109999 19701299 20130399 20099999 19689999 20039999
-## [169] 20100699 20111099 19929999 19879999 19879999 19940999 19969999
-## [176] 20129999 19979999 20089999 20099999 19790699 19939999 19829999
-## [183] 20019999 20089999 20070999 20049999 20109999 20029999 20139999
-## [190] 20089999 19650899 19949999 20099999 19929999 20120599 20079999
-## [197] 19959999 20080699 20100199 20030699 20020799 19920299 20050999
-## [204] 20099999 19981099 19869999 20119999 19739999 19849999 19960299
-## [211] 19839999 19739999 19670299 20049999 20029999 20059999 19820899
-## [218] 20039999 19939999 20040399 19931199 20010999 20129999 19819999
-## [225] 20069999 19819999 19999999 20099999 19639999 20109999 20140199
-## [232] 20020999 19890899 20129999 19959999 19809999 19979999 19899999
-## [239] 20069999 20020899 20021099 20039999 19999999 19729999 20039999
-## [246] 20019999 19859999 19849999 20019999 19971299 19809999 19709999
-## [253] 19639999 19909999 20119999 20060799 19809999 20109999 20009999
-## [260] 19739999 20010699 19849999 19879999 19821299 19729999 19650799
-## [267] 19981299 20109999 19789999 20039999 19691199 19859999 20000599
-## [274] 20130299 19729999 19729999 19929999 20159999 20099999 20009999
-## [281] 20041199 19809999 19739999 20019999 20080599 19889999 19919999
-## [288] 20080899 19729999 20089999 19949999 19610299 19999999 19949999
-## [295] 19689999 20049999 19979999 20169999 20159999 19819999 19919999
-## [302] 20099999 19839999 20129999 19919999 19749999 19849999 20039999
-## [309] 19749999 19649999 20009999 20110699 19799999 19991199 19899999
-## [316] 19749999 19800599 19969999 19829999 19929999 19931299 19899999
-## [323] 19900299 19929999 20049999 19579999 19849999 19759999 20039999
-## [330] 19979999 20070399 19609999 19739999 20069999 19919999 19879999
-## [337] 20060299 20119999 19711199 19839999 20049999 19939999 20029999
-## [344] 19819999 19939999 20049999 19779999 20100299 19899999 19959999
-## [351] 19739999 19980599 20080999 19780499 20150399 20079999 20019999
-## [358] 20069999 20010199 19979999 19589999 20120599 19919999 20029999
-## [365] 19949999 20139999 19990199 19969999 20090799 19959999 19869999
-## [372] 20030199 20120199 19940699 19859999 19979999 20020699 19929999
-## [379] 19629999 20169999 19959999 19979999 19989999 19939999 19949999
-## [386] 19919999 19920999 20020199 20029999 19809999 19980999 19699999
-## [393] 20009999 19809999 20019999 19799999 19859999 19839999 20031199
-## [400] 19940899 19689999 20051199 19949999 19970799 19829999 19799999
-## [407] 19929999 19739999 20061299 20100699 19909999 19959999 20040799
-## [414] 19839999 19930899 19839999 20019999 19989999 20039999 19539999
-## [421] 19549999 19769999 20030199 20120299 20029999 19849999 20049999
-## [428] 20120399 20010599 20000999 19999999 19759999 19859999 19769999
-## [435] 19709999 19769999 19889999 20089999 19970599 20139999 20149999
-## [442] 19939999 20020599 19979999 20059999 19899999 19991199 20040399
-## [449] 19670599 19759999 20080399 20089999 20010199 19579999 20059999
-## [456] 20119999 19729999 19799999 20069999 19749999 19879999 19971299
-## [463] 19869999 19979999 20080699 20040899 19759999 19999999 20110999
-## [470] 20081099 19999999 19969999 19819999 19809999 19799999 19969999
-## [477] 19949999 19789999 19889999 19919999 20010599 19939999 19880699
-## [484] 20080499 20039999 19829999 20050499 19869999 20159999 19999999
-## [491] 20120999 19909999 20051299 19991199 20039999 20029999 20169999
-## [498] 20069999 19960999 20019999 19911199 20001299 19990199 20069999
-## [505] 20030199 20040799 20099999 20111199 19990299 20139999 20129999
-## [512] 19909999 20061299 19759999 19869999 19969999 19999999 19899999
-## [519] 19609999 20009999 19719999 20110899 20059999 19959999 20119999
-## [526] 19929999 19929999 20109999 19709999 19999999 19849999 19979999
-## [533] 19699999 20040499 19849999 19660999 19909999 20121199 19789999
-## [540] 20059999 19699999 19979999 19799999 20159999 19920499 19929999
-## [547] 20160599 19829999 20009999 20020199 19869999 20049999 19689999
-## [554] 20060299 19879999 19919999 20059999 19749999 19819999 20129999
-## [561] 19919999 20051199 19909999 19739999 20029999 19739999 20089999
-## [568] 20149999 19669999 19959999 20029999 19829999 19949999 20020199
-## [575] 20090899 19869999 19829999 20139999 20081099 19949999 19789999
-## [582] 20029999 20049999 19759999 20040899 20040499 19699999 19670699
-## [589] 20049999 20039999 20100399 19909999 19759999 20019999 19939999
-## [596] 20139999 19909999 20140499 20029999 20159999 20029999 20009999
-## [603] 20059999 20159999 19629999 20130999 20110799 19999999 20090299
-## [610] 19859999 20129999 19959999 19739999 20050799 20089999 19849999
-## [617] 19940799 20059999 20041299 20009999 20049999 19899999 20140199
-## [624] 19680699 20050199 19879999 19739999 20010199 19739999 19739999
-## [631] 20019999 20019999 19989999 20050299 20079999 20049999 19769999
-## [638] 20179999 19849999 19879999 20059999 19769999 20129999 19769999
-## [645] 20029999 20050199 19939999 20059999 20111099 19809999 20049999
-## [652] 20081099 19799999 20030799 19999999 20169999 20029999 20049999
-## [659] 20049999 19989999 19909999 20159999 19759999 20029999 19769999
-## [666] 20089999 20069999 19859999 20060399 20099999 20149999 20101299
-## [673] 19989999 20030499 20061299 19809999 19799999 19989999 20070399
-## [680] 19979999 20011199 20090699 20069999 19909999 19999999 19969999
-## [687] 20069999 19839999 19989999 19829999 19919999 19969999 20049999
-## [694] 20049999 19959999 19979999 20089999 19969999 20089999 19999999
-## [701] 19899999 19739999 20039999 19939999 20169999 20110699 20061099
-## [708] 20089999 20009999 20080499 20080499 20159999 19989999 20039999
-## [715] 20089999 19650999 20079999 19960399 20169999 20099999 20089999
-## [722] 20059999 19719999 20019999 20159999 20110199 20099999 20049999
-## [729] 19669999 20159999 19809999 20089999 20090199 20159999 20100399
-## [736] 19969999 20089999 19839999 20029999 19979999 20039999 20020499
-## [743] 19859999 19739999 20159999 19949999 19829999 19899999 19869999
-## [750] 19989999 20061299 19769999 20089999 19971099 20039999 20009999
-## [757] 20039999 19959999 20139999 20149999 19809999 19909999 19609999
-## [764] 20120299 20029999 20059999 19549999 19809999 19909999 19809999
-## [771] 19939999 20099999 20090999 19969999 19960599 19669999 20101099
-## [778] 19969999 20119999 20029999 20049999 19879999 20009999 19859999
-## [785] 19819999 20069999 20039999 20089999</code></pre>
-<pre class="r"><code># create a variable year of diagnosis
+# pull(bc_dx_int,dxdate)[date_dx_na]
+
+# create a variable year of diagnosis
 date_dx_yr &lt;- year(date_dx) 
 # it was formed by those who are successfully converted into date format
+
 # create a new variable for month of diagnosis
 date_dx_mth &lt;- month(date_dx)
 
@@ -1076,13 +1066,14 @@ date_dx_mth &lt;- month(date_dx)
 # generate a new variable year of diagnosis for those missing month and day
 date_dx_miss_yr &lt;- pull(bc_dx_int,dxdate)[date_dx_na] %&gt;% 
   as.character() %&gt;% substr(.,start = 1,stop = 4) %&gt;% as.numeric()
+
 # generate a new variable month of diagnosis for those missing month and day
 date_dx_miss_mth &lt;- pull(bc_dx_int,dxdate)[date_dx_na] %&gt;% 
   as.character() %&gt;% substr(.,start = 5,stop = 6) %&gt;% as.numeric()
 # there are lots of 99 in months
 # b/c some patients do not have info on months
-# to avoid error in comparation, change 99 to NA
-date_dx_miss_mth[which(date_dx_miss_mth==99)] &lt;- NA
+# to avoid error in comparation, change 99 to 6 (June)
+date_dx_miss_mth[which(date_dx_miss_mth==99)] &lt;- 6
 
 # fill in the value into variable year of diagnosis
 for (i in 1:length(date_dx_na)) {
@@ -1101,26 +1092,26 @@ bc_dx_int &lt;- add_column(bc_dx_int,
 <p>New variables, being used to determine if diagnose date is before interview date, are created and added into the tibble. The table of distribution will be created as well.</p>
 <p>We will use 1 to denote patients whose diagnosed date is before or equal to interview date. Those patient will be excluded; we will use 0 to denote patient who diagnosed date is after interview date.</p>
 <ul>
-<li>filtered the date</li>
+<li>filtered by exact date</li>
 </ul>
 <pre class="r"><code>bc_dx_int %&gt;% mutate(diag_bef_intvw = case_when(
   date_int &lt; date_dx ~ 0,
   date_int &gt;= date_dx ~ 1)) %&gt;% 
   group_by(diag_bef_intvw) %&gt;% 
-  summarize(n=n())</code></pre>
+  summarize(n=n()) </code></pre>
 <pre><code>## # A tibble: 3 x 2
 ##   diag_bef_intvw     n
 ##            &lt;dbl&gt; &lt;int&gt;
-## 1              0   600
-## 2              1  2149
-## 3             NA   789</code></pre>
+## 1              0   467
+## 2              1  1835
+## 3             NA   637</code></pre>
 <pre class="r"><code># based on the output, the column in date format can be more accurate
 # redefine the tibble
 bc_dx_int &lt;- bc_dx_int %&gt;% mutate(diag_bef_intvw = case_when(
   date_int &lt; date_dx ~ 0,
   date_int &gt;= date_dx ~ 1))</code></pre>
-<p>There are 600 subjects with daignosed date after interview date, 2149 subjects with diagnosis date before or equal to interview date, and 789 subjects with NA. The NA is caused by missing value in month and day.</p>
-<p>Among those 600 subjects, we need to further check if they are diagnosed with breast cancer within 2 months after date of diagnosis.</p>
+<p>There are 467 subjects with daignosed date after interview date, 1835 subjects with diagnosis date before or equal to interview date, and 637 subjects with NA. The NA is caused by missing value in month and day.</p>
+<p>Among those 467 subjects, we need to further check if they are diagnosed with breast cancer within 2 months after date of diagnosis.</p>
 <pre class="r"><code>bc_dx_int %&gt;% filter(diag_bef_intvw==0) %&gt;% 
   mutate(diag_bef_intvw_plus2mth = case_when(
     date_dx &gt; date_int_two_mth ~ 0,
@@ -1131,16 +1122,17 @@ bc_dx_int &lt;- bc_dx_int %&gt;% mutate(diag_bef_intvw = case_when(
 <pre><code>## # A tibble: 2 x 2
 ##   diag_bef_intvw_plus2mth     n
 ##                     &lt;dbl&gt; &lt;int&gt;
-## 1                       0   574
-## 2                       1    26</code></pre>
-<p>There are 26 subjects with exact date whose diagnosed date is within 2 months after the interview date.</p>
-<p>Other 574 subjects with exact date whose diagnosed date is after the interview dates (+2 months).</p>
-<p>For those who missed information on month and day, we can looked at year alternatively. But, it could be problematic when years are equal.</p>
+## 1                       0   449
+## 2                       1    18</code></pre>
+<p>There are 18 subjects with exact date whose diagnosed date is within 2 months after the interview date.</p>
+<p>The other 449 subjects with exact date whose diagnosed date is after the interview dates (+2 months).</p>
+<p>For those who missed information on month and day, we can looked at year alternatively.</p>
 <ul>
 <li>filtered by year</li>
 </ul>
 <p>We used 1 to denote those who have equal interview and diagnosis year; 0 denoted those with unequal year of interview and diagnosis.</p>
-<pre class="r"><code>bc_dx_int %&gt;% filter(is.na(diag_bef_intvw)) %&gt;%  
+<pre class="r"><code># see the distribution of subjects without missing month and day but with equal year
+bc_dx_int %&gt;% filter(is.na(diag_bef_intvw)) %&gt;%  
   mutate(diag_equl_intvw_yronly = case_when(
   date_int_yr == date_dx_yr ~ 1,
   date_int_yr != date_dx_yr ~ 0)) %&gt;% 
@@ -1149,8 +1141,8 @@ bc_dx_int &lt;- bc_dx_int %&gt;% mutate(diag_bef_intvw = case_when(
 <pre><code>## # A tibble: 2 x 2
 ##   diag_equl_intvw_yronly     n
 ##                    &lt;dbl&gt; &lt;int&gt;
-## 1                      0   763
-## 2                      1    26</code></pre>
+## 1                      0   615
+## 2                      1    22</code></pre>
 <pre class="r"><code># keep the subjects with equal years as 0 
 # b/c we need to further make sure if we should exclude them.
 bc_dx_int &lt;- bc_dx_int %&gt;% mutate(diag_equl_intvw_yronly = case_when(
@@ -1160,12 +1152,12 @@ bc_dx_int &lt;- bc_dx_int %&gt;% mutate(diag_equl_intvw_yronly = case_when(
     date_int_yr &gt; date_dx_yr ~ 1,
     date_int_yr &lt;= date_dx_yr ~ 0
   ))</code></pre>
-<p>We can see there are 26 subjects without exact date but equal years of interview and diagnosis, and 763 subjects without exact date but unequal years of interview and diagnosis.</p>
-<p>We can deal with those 763 subjects by comparing years, but, for those 26 subjects, we need to futher looked at month.</p>
+<p>We can see there are 22 subjects without exact date but equal years of interview and diagnosis, and 615 subjects without exact date but unequal years of interview and diagnosis.</p>
+<p>We can deal with those 615 subjects by comparing years, but, for those 22 subjects, we need to compare their month.</p>
 <ul>
-<li>filter for month</li>
+<li>filter by month for subjects with equal years of interview and diagnosis</li>
 </ul>
-<p>When looking at month, this will indicate if their diagnosis dates are before two months after interview date, because we don’t need any subjects who were diagnosed within 2 months after interview date.</p>
+<p>Month will indicate if their diagnosis dates are before two months after interview date, because we don’t need any subjects who were diagnosed within 2 months after interview date.</p>
 <p>We still need to see if there are subjects with equal years and months of interview (+2 months) and diagnosis. If so, we may ask for further information from data source.</p>
 <pre class="r"><code>bc_dx_int %&gt;% filter(is.na(diag_bef_intvw)) %&gt;% 
   filter(diag_equl_intvw_yronly==1) %&gt;% 
@@ -1174,40 +1166,11 @@ bc_dx_int &lt;- bc_dx_int %&gt;% mutate(diag_equl_intvw_yronly = case_when(
     date_int_mth+2 != date_dx_mth ~ 0
   )) %&gt;% group_by(diag_equl_intvw_yr_mth) %&gt;% 
   summarize(n=n())</code></pre>
-<pre><code>## # A tibble: 2 x 2
+<pre><code>## # A tibble: 1 x 2
 ##   diag_equl_intvw_yr_mth     n
 ##                    &lt;dbl&gt; &lt;int&gt;
-## 1                      0    14
-## 2                     NA    12</code></pre>
-<p>There are 12 subjects with equal years but missing months. We need some help for those 12 subjects to see if we get the information on month.</p>
-<p>There are 14 subjects with equal years but different months of interview (+2 months) and diagnosis.</p>
+## 1                      0    22</code></pre>
 <p>There is no subject with equal years and equal months of interview (+2 months) and diagnosis.</p>
-<p>For those 12 subjects, we need more help!!! Or, we can just count them as missing date. It will lose power. We can keep them temporarily.</p>
-<pre class="r"><code>bc_dx_int %&gt;% filter(is.na(diag_bef_intvw)) %&gt;% 
-  filter(diag_equl_intvw_yronly==1) %&gt;% 
-  mutate(diag_equl_intvw_yr_mth = case_when(
-    date_int_mth+2 == date_dx_mth ~ 1,
-    date_int_mth+2 != date_dx_mth ~ 0
-  )) %&gt;% filter(is.na(diag_equl_intvw_yr_mth))</code></pre>
-<pre><code>## # A tibble: 12 x 16
-##    new_id dt_interview date_int   date_int_yr date_int_mth date_int_two_mth
-##     &lt;dbl&gt;        &lt;dbl&gt; &lt;date&gt;           &lt;dbl&gt;        &lt;dbl&gt; &lt;date&gt;          
-##  1  13899     19970828 1997-08-28        1997            8 1997-10-28      
-##  2  14657     19980910 1998-09-10        1998            9 1998-11-10      
-##  3  14692     19981016 1998-10-16        1998           10 1998-12-16      
-##  4  14907     19981223 1998-12-23        1998           12 1999-02-22      
-##  5  18619     19981118 1998-11-18        1998           11 1999-01-18      
-##  6  19228     20051007 2005-10-07        2005           10 2005-12-07      
-##  7  21912     20041208 2004-12-08        2004           12 2005-02-07      
-##  8  22498     20080320 2008-03-20        2008            3 2008-05-20      
-##  9  23117     20080522 2008-05-22        2008            5 2008-07-22      
-## 10  23636     20090628 2009-06-28        2009            6 2009-08-28      
-## 11  23708     20090709 2009-07-09        2009            7 2009-09-08      
-## 12  24058     20110602 2011-06-02        2011            6 2011-08-02      
-## # ... with 10 more variables: age_interview &lt;dbl&gt;, agedx &lt;dbl&gt;,
-## #   dxdate &lt;dbl&gt;, date_dx &lt;date&gt;, date_dx_yr &lt;dbl&gt;, date_dx_mth &lt;dbl&gt;,
-## #   diag_bef_intvw &lt;dbl&gt;, diag_equl_intvw_yronly &lt;dbl&gt;,
-## #   diag_bef_intvw_yronly &lt;dbl&gt;, diag_equl_intvw_yr_mth &lt;dbl&gt;</code></pre>
 <p>Since there is no equal months of diagnosis and interview (+2 months), we can only include ‘greater than’ and ‘smaller than’ symbols in the code.</p>
 <p>There may be concerns about months because values of months can go over 12. However, if the months of interview (+2 months) go over 12, it indicated that the year of interview of this subject can be greater than the year of diagnosis. They will be denoted as 1 and be excluded. Therefore, no futher actions are needed.</p>
 <pre class="r"><code>bc_dx_int %&gt;% filter(is.na(diag_bef_intvw)) %&gt;% 
@@ -1217,42 +1180,39 @@ bc_dx_int &lt;- bc_dx_int %&gt;% mutate(diag_equl_intvw_yronly = case_when(
     date_int_mth+2 &lt; date_dx_mth ~ 0
   )) %&gt;% group_by(diag_bef_intvw_yr_mth) %&gt;% 
   summarize(n=n())</code></pre>
-<pre><code>## # A tibble: 3 x 2
+<pre><code>## # A tibble: 2 x 2
 ##   diag_bef_intvw_yr_mth     n
 ##                   &lt;dbl&gt; &lt;int&gt;
 ## 1                     0     4
-## 2                     1    10
-## 3                    NA    12</code></pre>
+## 2                     1    18</code></pre>
 <p>There are 4 subjects with equal years whose diagnosis months is later than interview months (+2 months).</p>
-<p>There are 10 subjects with equal years whose diagnosis months is earlier than interview months (+2 months).</p>
+<p>There are 18 subjects with equal years whose diagnosis months is earlier than interview months (+2 months).</p>
 <pre class="r"><code># create a new variable for comparing months
 bc_dx_int &lt;- bc_dx_int %&gt;% mutate(diag_bef_intvw_yr_mth = case_when(
   date_int_mth+2 &gt; date_dx_mth ~ 1,
   date_int_mth+2 &lt; date_dx_mth ~ 0
-  ))
-
-# use the indicator variable we built before to exclude those before interview date and 2 months before interview date.
-# diag_bef_intvw indicate if the exact diagnosis date is before exact interview date
-# 0 was denoted as subjects whose exact diagnosis dates are after exact interview date
-# then, exclude those whose diagnosis dates are before interview day and interview date (+2 months)
-# we only need new_id, b/c we can use it to select the row from the whole dataset
+  ))</code></pre>
+<p>use the indicator variable we built before to exclude those before interview date and 2 months before interview date.</p>
+<p>diag_bef_intvw indicate if the exact diagnosis date is before exact interview date</p>
+<p>0 was denoted as subjects whose exact diagnosis dates are after exact interview date</p>
+<p>Then, exclude those whose diagnosis dates are before interview day and interview date (+2 months)</p>
+<pre class="r"><code># we only need new_id b/c we can use it to select the row from the whole dataset
+# create a new variable for id of subjects with exact date whose diagnosis date is after interview date (+2 months)
 bc_int_bef_diag_id1 &lt;- bc_dx_int %&gt;% filter(diag_bef_intvw==0) %&gt;% 
-  filter(date_int_two_mth &lt; date_dx) %&gt;% pull(new_id)
-
-# filter out those without exact date
-# filtered by year using indicator variables &#39;diag_bef_intvw_yronly&#39; and &#39;diag_bef_intvw_yronly&#39;
-# diag_bef_intvw_yronly:
-# 0 was denoted as subjects whose diagnosis years are before or equal to interview years
-# diag_equl_intvw_yronly:
-# 0 was denoted as subjects whose diagnosis years are unequal to interview years
-bc_int_bef_diag_id2 &lt;-  bc_dx_int %&gt;% 
+  filter(date_int_two_mth &lt; date_dx) %&gt;% pull(new_id)</code></pre>
+<p>Filter out those without exact date</p>
+<p>Filtered by year using indicator variables ‘diag_bef_intvw_yronly’ and ‘diag_bef_intvw_yronly’</p>
+<p>diag_bef_intvw_yronly: 0 was denoted as subjects whose diagnosis years are after or equal to interview years</p>
+<p>diag_equl_intvw_yronly: 0 was denoted as subjects whose diagnosis years are unequal to interview years</p>
+<pre class="r"><code># create a new variable for id of subjects without exact date whose diagnosis year is after the interview years
+bc_int_bef_diag_id2 &lt;- bc_dx_int %&gt;% 
   filter(is.na(diag_bef_intvw)) %&gt;% 
   filter(diag_bef_intvw_yronly==0) %&gt;% 
   filter(diag_equl_intvw_yronly==0) %&gt;% 
   pull(new_id)
-
 # diag_equl_intvw_yronly:
 # 1 was denoted as subjects whose diagnosis years are equal to interview years
+
 # diag_bef_intvw_yr_month is an indicator variable that determine if diagnosis month is greater than interview month (+ 2 months)
 # diag_bef_intvw_yr_month: 
 # 0 was denoted as subjects whose diagnosis months are greater than interview month (+ 2 months)
@@ -1269,55 +1229,80 @@ bc_int_bef_diag_id &lt;- c(bc_int_bef_diag_id1,
 
 # get the number of subjects with date infomation whose diagnosis date is at least two months after interview date
 length(bc_int_bef_diag_id)</code></pre>
-<pre><code>## [1] 861</code></pre>
-<pre class="r"><code># those 12 subjects are considered as missing
-bc_dx_int_missmth_id &lt;- bc_dx_int %&gt;% 
-  filter(is.na(diag_bef_intvw)) %&gt;% 
-  filter(diag_equl_intvw_yronly==1) %&gt;% 
-  filter(is.na(diag_bef_intvw_yr_mth)) %&gt;% 
-  pull(new_id)</code></pre>
-<p>We already acquired 861 unique subject id with diagnosis date after interview date (+2 months).</p>
-<p>Now we need to compare those 861 subjects with subjects we got in bc_rx (questions about breast cancer diagnosis and mastectomy).</p>
+<pre><code>## [1] 705</code></pre>
+<p>We already acquired 705 unique subject id with diagnosis date after interview date (+2 months).</p>
+<p>Now we need to compare those 705 subjects with subjects we got in bc_rx (questions about breast cancer diagnosis).</p>
 <pre class="r"><code># we combine two id variable and see if there are duplicated values
 # both id variable are unique
 sum(duplicated(c(bc_rx_nobc_id,bc_int_bef_diag_id)))</code></pre>
-<pre><code>## [1] 6</code></pre>
-<pre class="r"><code># there are 6 duplicated subjects
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code># there is 1 duplicated subject
 which(duplicated(c(bc_rx_nobc_id,bc_int_bef_diag_id)))</code></pre>
-<pre><code>## [1] 146 295 311 323 332 340</code></pre>
-<pre class="r"><code># we need to look at other 100 subjects who answered &#39;no&#39; in their questions 
+<pre><code>## [1] 100</code></pre>
+<pre class="r"><code># we need to look at other 67 subjects who answered &#39;no&#39; in their questions 
 # exclude those with exact date 
 bc_data7 %&gt;% filter(new_id %in% bc_rx_nobc_id) %&gt;% 
   select(new_id,dt_interview,age_interview,agedx,dxdate,dxest) %&gt;% 
   filter(is.na(dxdate))</code></pre>
-<pre><code>## # A tibble: 16 x 6
+<pre><code>## # A tibble: 13 x 6
 ##    new_id dt_interview age_interview agedx dxdate dxest
 ##     &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-##  1   1807     19990802            53    NA     NA    NA
-##  2   1973     19980120            63    NA     NA    NA
-##  3   2197     19990413            72    NA     NA    NA
-##  4   2524     20000103            52    NA     NA    NA
-##  5   2729     20010828            65    NA     NA    NA
-##  6   2743     20020722            55    NA     NA    NA
-##  7   2877     20020701            66    NA     NA    NA
+##  1   1801     19990120            59    NA     NA    NA
+##  2   1807     19990802            53    NA     NA    NA
+##  3   1973     19980120            63    NA     NA    NA
+##  4   2197     19990413            72    NA     NA    NA
+##  5   2524     20000103            52    NA     NA    NA
+##  6   2729     20010828            65    NA     NA    NA
+##  7   2743     20020722            55    NA     NA    NA
 ##  8   3420     20061102            69    NA     NA    NA
 ##  9   3884     19970223            56    NA     NA    NA
 ## 10   3981     19980202            46    NA     NA    NA
-## 11   4470     19990211            57    NA     NA    NA
-## 12   4638     19980716            49    NA     NA    NA
-## 13   5009     19980121            45    NA     NA    NA
-## 14   5054     19980519            59    NA     NA    NA
-## 15   5784     19970903            55    NA     NA    NA
-## 16   5952     19980916            75    NA     NA    NA</code></pre>
+## 11   3999     19980325            82    NA     NA    NA
+## 12   4470     19990211            57    NA     NA    NA
+## 13   4638     19980716            49    NA     NA    NA</code></pre>
 <pre class="r"><code>bc_rx_nadx_id &lt;- bc_data7 %&gt;% filter(new_id %in% bc_rx_nobc_id) %&gt;% 
   select(new_id,dt_interview,age_interview,agedx,dxdate,dxest) %&gt;% 
   filter(is.na(dxdate)) %&gt;% 
   pull(new_id)</code></pre>
-<p>There are 16 subjects with NA in diagnosis date answered answer ‘no’, but We don’t know if they were diagnosed within 2 months after interview.</p>
-<p>There are 106-16-6=84 sunjects who asnwered no in questions but could be excluded during previous process of exclusion by comparison.</p>
-<p>We checked the id of 12 subjects with incomplete information of diagnosis date. There is no overlapped subjects.</p>
-<pre class="r"><code># we can confirm there are 877 subjects with diagnosis date before interview date. 
-bc_int_bef_diag_finid &lt;- c(bc_int_bef_diag_id,bc_rx_nadx_id)</code></pre>
+<p>There are 13 subjects with NA in diagnosis date answered answer ‘no’, but We don’t know if they were diagnosed within 2 months after interview.</p>
+<p>There are 68-13-1=54 subjects who answered no in questions but could be excluded during previous process of exclusion by comparison.</p>
+<pre class="r"><code>bc_int_bef_diag_finid &lt;- c(bc_int_bef_diag_id,bc_rx_nadx_id)
+
+length(bc_int_bef_diag_finid)</code></pre>
+<pre><code>## [1] 718</code></pre>
+<p>We can confirm there are 718 subjects with diagnosis date before interview date (+2 months).</p>
+<p>Use the subject id to select eligible subjects</p>
+<pre class="r"><code># create a new table for subject with missing and na dxdate
+bc_data7_miss_na_dxdate &lt;- bc_data7 %&gt;% 
+  filter(dxdate==99999999|is.na(dxdate))
+
+# create a new table for subject with verified diagnosis dates later than interview dates (+2 months)
+bc_data7_exc_dx &lt;- bc_data7 %&gt;% 
+  filter(dxdate!=99999999) %&gt;% 
+  filter(!is.na(dxdate)) %&gt;% 
+  filter(new_id %in% bc_int_bef_diag_id)
+
+# bind two tables together
+bc_data7_exc_dx &lt;- rbind(bc_data7_miss_na_dxdate,
+                         bc_data7_exc_dx)</code></pre>
+</div>
+<div id="mastectomy" class="section level3">
+<h3>mastectomy</h3>
+<p>Similar with breast cancer diagnosis, we check answers to the question of mastectomy first.</p>
+<pre class="r"><code># view the distribution of subjects who answered question of mastectomy
+bc_data7_exc_dx %&gt;% group_by(br_surg_mas) %&gt;% 
+  summarize(n=n())</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   br_surg_mas     n
+##         &lt;dbl&gt; &lt;int&gt;
+## 1           1     2
+## 2           2    12
+## 3          NA  6696</code></pre>
+<p>“1” was denoted as subjects who answered “yes” in the question; “2” was denoted as subjects who answered “no” in the question.</p>
+<p>There are 2 subject who answered “yes” at the baseline.</p>
+<p>There are 12 subjects who answered “no” at the baseline.</p>
+<p>There are 6676 subjects with NA.</p>
+<p>We cannot directly remove subjects who answered “yes” before we check if they removed both sides of breast.</p>
 </div>
 </div>
 </div>
