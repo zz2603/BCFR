@@ -80,6 +80,18 @@ bc_confirm <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/bc_confirmation.csv") %
 hawaii_dt <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/Hawaii_diet.csv") %>% 
   janitor::clean_names()
 
+## import dataset "bc_fu.csv"
+bc_fu <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/bc_fu.csv") %>% 
+  janitor::clean_names()
+
+## import dataset "bc_fu2.csv"
+bc_fu2 <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/bc_fu2.csv") %>% 
+  janitor::clean_names()
+
+## import dataset "bc_fu3.csv"
+bc_fu3 <- read_csv("C:/Users/zzhao/Desktop/BCFR/data/bc_fu3.csv") %>% 
+  janitor::clean_names()
+
 ```
 
 # merging and cleaning dataset
@@ -251,7 +263,8 @@ bc_data_exc_aus %>% filter(is.na(diet_q_hi)) %>%
                            food_group_poultry,
                            food_group_processed_poultry,
                            food_group_legumes,
-                           fish_only)
+                           fish_only) %>% 
+  head()
 
 ```
 
@@ -386,7 +399,7 @@ Based on the table, there are 101 subjects with less than 500 cal and 722 subjec
 
 There are 14142 subjects left in the dataset.
 
-## Exclude patient who were diagnosed with breast cancer or had surgery of mastectomy before the date of interview.
+## Exclude patient who were diagnosed with breast cancer or had mastectomy of both breasts before the date of interview.
 
 ### breast cancer diagnosis 
 
@@ -404,7 +417,7 @@ bc_data_epi_diet_q %>% group_by(brca) %>%
 
 ```
 
-There are 5626 subjects who answered 'yes', 64 subjects answered 'no', and 8452 subjects with N/A. We cannot exclude those with N/A directly. We still need to check their date of diagnosis. Also, there could be recall bias happened. We need to check date of diagnosis for all of them.
+There are 5626 subjects who answered 'yes', 64 subjects answered 'no', and 8452 subjects with N/A. We cannot exclude those with N/A directly. We still need to check their date or age at diagnosis. Also, there could be recall bias happened. We need to check date of diagnosis for all of them.
 
 To get the date of diagnosis, we need to get information from cancer.csv. Pick the patient with earliest date of breast cancer diagnosis.
 
@@ -413,19 +426,24 @@ To get the date of diagnosis, we need to get information from cancer.csv. Pick t
 # data is from cancer.csv
 # some patients could get more than one tumor from multiple sites
 # pick the patient with breast cancer
-# see the distribution of cancer site
+# see the distribution of breast cancer site
 cancer %>% group_by(site) %>% 
-  summarize(freq = n())
+  summarize(freq = n()) %>% 
+  filter(site %in% c("C500","C501","C502","C503",
+                     "C504","C505","C506","C507",
+                     "C508","C509"))
 
 ```
 
-Based on ICD-O-3, we only choose the sites: C500-509.
+Based on ICD-O-3, we only choose the sites: C500-509. Also, for ICD-O-3 5th digit behavior code, we only select '2' (Carcinoma in situ) and '3' (Malignant). 
 
 ```{r include=FALSE}
 # select subjects with breast cancer
-bc_cancer <- cancer %>% filter(site %in% c("C500","C501","C502","C503",
+bc_cancer <- cancer %>% 
+  filter(site %in% c("C500","C501","C502","C503",
                               "C504","C505","C506","C507",
-                              "C508","C509"))
+                              "C508","C509")) %>% 
+  filter(behav %in% c(2,3))
 
 # only use the earliest dxdate of breast cancer
 dt_dx <- pull(bc_cancer,dxdate) %>% ymd() # convert into date format
@@ -487,7 +505,7 @@ bc_data7 <- bc_data7 %>% filter(new_id %in% bc_id)
 
 ```
 
-There are 24 rows with missing dxdate and agedx. There isn't any rows with missing dt_interview and age_interview.
+There are `r length(dx_NA_id)` rows with missing dxdate and agedx. There isn't any rows with missing dt_interview and age_interview.
 
 Next, we checked those subjects with missing dxdate but agedx. We can compare the age at interview and age at diagnosis. We will select patients with age of diagnosis that is greater than or equal to age at interview. (we are temporarily not sure what to do to deal with those with equal agedx.) 
 
@@ -508,12 +526,12 @@ We next check patients with N/A dxdate and see how agedx change and we are sure 
 ```{r include=FALSE}
 # see total length of agedx
 bc_data7 %>% filter(is.na(dxdate)) %>% 
-  select(new_id,dt_interview,age_interview,age_interview,agedx,dxdate) %>% 
+  select(new_id,dt_interview,age_interview,agedx,dxdate) %>% 
   pull(agedx) %>% length()
 
 # see how many NA in agedx
 bc_data7 %>% filter(is.na(dxdate)) %>% 
-  select(new_id,dt_interview,age_interview,age_interview,agedx,dxdate) %>% 
+  select(new_id,dt_interview,age_interview,agedx,dxdate) %>% 
   pull(agedx) %>% is.na() %>% sum()
 
 # we need id for those with NA dxdate and dxage
@@ -543,7 +561,7 @@ bc_dx_int %>% filter(age_interview==999|agedx==999)
 
 ```
 
-There are 4 subjects with missing agedx. We can compare the dxdate alternatively. We next seet how many subjects have equal agedx and age_interview. 
+There are 5 subjects with missing agedx. We can compare the dxdate alternatively. We next seet how many subjects have equal agedx and age_interview. 
 
 ```{r include=FALSE}
 bc_dx_int %>% filter(age_interview==agedx)
@@ -551,7 +569,7 @@ bc_dx_int %>% filter(age_interview==agedx)
 
 ```
 
-There are 306 subjects with equal agedx and age at interview. For those subjects, we also need to compare the dxdate and dt_interview alternatively.
+There are 312 subjects with equal agedx and age at interview. For those subjects, we also need to compare the dxdate and dt_interview alternatively.
 
 For other subjects, we can compare the age directly. 
 
@@ -591,7 +609,7 @@ date_dx <- bc_dx_int %>%
   filter(agedx==age_interview | agedx==999) %>%
   pull(dxdate) %>% 
   ymd()
-# there are 15 failed to parse
+# there are 14 failed to parse
 # get the location of NA
 # generate a new varaible for those NA's location
 date_dx_na_loc <- which(is.na(date_dx))
@@ -675,7 +693,7 @@ bc_dx_int_tbl <- bc_dx_int_tbl %>% mutate(dx_bf_int_2mth = case_when(
 
 ```
 
-Among 310 subjects with missing agedx or equal agedx and age_interview, there are 18 subjects with daignosed date after interview date (+2 months), 277 subjects with diagnosis date before or equal to interview date (+2 months), and 15 subjects with NA. The NA is caused by missing value in month and day.
+Among 317 subjects with missing agedx or equal agedx and age_interview, there are 19 subjects with daignosed date after interview date (+2 months), 284 subjects with diagnosis date before or equal to interview date (+2 months), and 14 subjects with NA. The NA is caused by missing value in month and day.
 
 For those who missed information on month and day, we can looked at year alternatively.
 
@@ -694,7 +712,7 @@ bc_dx_int_tbl %>% filter(is.na(dx_bf_int_2mth)) %>%
 
 ```
 
-There are 6 subjects with equal year of dx and interview and 9 subjects with unequal year of dx and interview.
+There are 6 subjects with equal year of dx and interview and 8 subjects with unequal year of dx and interview.
 
 ```{r echo=FALSE}
 # see the distribution of subjects without missing month and day
@@ -707,7 +725,7 @@ bc_dx_int_tbl %>% filter(is.na(dx_bf_int_2mth)) %>%
 
 ```
 
-There is only 1 subject with smaller interview year; there are 8 subjects with greater interview year. 
+There is no subject with smaller interview year; there are 8 subjects with greater interview year. 
 
 ```{r include=FALSE}
 # add new variable indicated if year of dx is smaller than year of interview
@@ -811,37 +829,135 @@ bc_data7 <- bc_data7 %>%
 
 ```
 
-There are 7,012 subject left in the dataset.
+There are 7173 subjects left in the dataset.
 
 ### mastectomy
 
-Similar with breast cancer diagnosis, we check answers to the question of mastectomy first.
+We can check answers to the question of mastectomy, but it didn't show if both breasts are completely removed. We need to looked at variables 'br_r_rem', 'br_l_rem', 'br_r_rem_age', and 'br_l_rem_age'. If subjects' both breasts are removed before the date of interview date, they should be removed from the dataset.
 
-```{r}
+```{r echo=FALSE}
 # view the distribution of subjects who answered question of mastectomy
-bc_data7_exc_dx %>% group_by(br_surg_mas) %>% 
-  summarize(n=n())
+bc_data7 %>% select(new_id,dt_interview,age_interview,
+                    br_r_rem,br_r_rem_age,
+                    br_l_rem,br_l_rem_age) %>% 
+  group_by(br_r_rem,br_l_rem) %>% 
+  summarize(freq = n())
 
 ```
 
-"1" was denoted as subjects who answered "yes" in the question; "2" was denoted as subjects who answered "no" in the question. 
+* '1' denoted as yes; '2' denoted as no; '3' denoted unknown; '9' denoted missing,
 
-There are 2 subject who answered "yes" at the baseline. 
+* there are 70 subjects with both breast removed. We need check their ages.
 
-There are 12 subjects who answered "no" at the baseline.
+* there is 1 subject with unknown laterality.
 
-There are 6676 subjects with NA.
+* there are 73 subjects with missing on both breast. They should be excluded.
 
-We cannot directly remove subjects who answered "yes" before we check if they removed both sides of breast.
+```{r echo=FALSE}
+# create a new tibble for variables related to mastectomy
+bc_mas <- bc_data7 %>% 
+  select(new_id,dt_interview,age_interview,
+         br_r_rem,br_r_rem_age,
+         br_l_rem,br_l_rem_age)
+
+# remove subjects with missing info on variables 'br_r_rem' and 'br_l_rem'
+bc_mas <- bc_mas %>% filter(br_r_rem!=9 | br_l_rem!=9)
+
+# check subjects with both breast removed
+# check for missing age of mastectomy
+bc_mas %>% filter(br_r_rem==1 & br_l_rem==1) %>% 
+  filter(br_r_rem_age==999 | br_l_rem_age==999)
+
+```
+
+There are 11 subjects with both breast removed but missed age of mastectomy. They should be removed.
+
+We want to check if there are subjects whose age of mastectomy is greater than age of interview.
+
+```{r }
+# see those whose age of mastecomy are greater than age of interview
+bc_mas %>% filter(br_r_rem==1 & br_l_rem==1) %>% 
+  filter(br_r_rem_age>age_interview | br_l_rem_age>age_interview)
+
+# see those whose age of mastecomy are smaller than or equal to age of interview
+bc_mas %>% filter(br_r_rem==1 & br_l_rem==1) %>% 
+  filter(br_r_rem_age<=age_interview & br_l_rem_age<=age_interview)
+
+```
+
+There are no subjects with both breasts removed whose age at mastectomy is greater than age of interview.
+
+Other subjects' age at mastectomy are smaller than or equal to age of interview. 
+
+All in all, 70 subjects with both breast removed should be removed. In total, we removed 143 subjects with missing info on mastectomy and age of matectomy.
+
+```{r include=FALSE}
+# exclude those with both breast removed
+bc_mas <- bc_mas %>% 
+  filter(br_r_rem!=1 | br_l_rem!=1)
+
+# extract id
+bc_mas_id <- bc_mas %>% pull(new_id)
+
+# create a new tibble after filtering for mastectomy
+bc_data8 <- bc_data7 %>% 
+  filter(new_id %in% bc_mas_id)
+
+```
+
+There are 7030 subjects left in the dataset.
+
+## Check living status
+
+We want to check the living status of subjects. 
 
 ```{r}
+# create a new tibble including all variable related to living status
+bc_vs <- bc_data8 %>% 
+  select(new_id,dt_interview,age_interview,vs,
+         livedate,age_death,age_death_est,dthdate,dth_cause)
 
-
+# see distribution of living status
+bc_vs %>% group_by(vs) %>% 
+  summarize(freq = n())
 
 ```
 
+There are 6370 alive subjects and 660 dead subjects.
 
+```{r}
+# see how many subjects who are alive but miss the info about last known living date
+bc_vs %>% filter(vs==1) %>% 
+  filter(livedate==99999999)
 
+# see how many subjects who are alive but have NA about living date
+bc_vs %>% filter(vs==1) %>% 
+  filter(is.na(livedate))
+
+# see how many subjects wbo are dead but miss the info about age of death and date of death
+bc_vs %>% filter(vs==2) %>% 
+  filter(age_death==999 & dthdate==99999999)
+
+# create new id variable that indicate id of dead subjects with missing info in both age of death and date of death
+bc_vs_dth_miss_id <- bc_vs %>% filter(vs==2) %>% 
+  filter(age_death==999 & dthdate==99999999) %>% 
+  pull(new_id)
+
+bc_vs_dth_miss_id <- c(bc_vs_dth_miss_id,14046)
+bc_vs_id <- bc_vs %>% pull(new_id)
+
+id_loc <- rep(0,length(bc_vs_dth_miss_id)) # create a vector to show the location of id
+for (i in 1:length(bc_vs_dth_miss_id)) {
+  id_loc[i] <- which(bc_vs_id==bc_vs_dth_miss_id[i])
+}
+
+bc_vs_id <- bc_vs_id[-id_loc]
+
+bc_data8 <- bc_data8 %>% filter(new_id %in% bc_vs_id)
+
+```
+
+There are 54 dead subjects with missing info in both age of death and date of death.They should be excluded. 
 
 
 
