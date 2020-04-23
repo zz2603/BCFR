@@ -879,7 +879,7 @@ There are 11 subjects with both breast removed but missed age of mastectomy. The
 
 We want to check if there are subjects whose age of mastectomy is greater than age of interview.
 
-```{r }
+```{r echo=FALSE}
 # see those whose age of mastecomy are greater than age of interview
 bc_mas %>% filter(br_r_rem==1 & br_l_rem==1) %>% 
   filter(br_r_rem_age>age_interview | br_l_rem_age>age_interview)
@@ -916,7 +916,7 @@ There are 7029 subjects left in the dataset.
 
 We want to check the living status of subjects. 
 
-```{r}
+```{r echo=FALSE}
 # create a new tibble including all variable related to living status
 bc_vs <- bc_data8 %>% 
   select(new_id,dt_interview,age_interview,vs,
@@ -930,7 +930,7 @@ bc_vs %>% group_by(vs) %>%
 
 There are 6369 alive subjects and 660 dead subjects.
 
-```{r}
+```{r echo=FALSE}
 # see how many subjects who are alive but miss the info about last known living date
 bc_vs %>% filter(vs==1) %>% 
   filter(livedate==99999999)
@@ -970,5 +970,17 @@ bc_data8 <- bc_data8 %>% filter(new_id %in% bc_vs_id)
 
 There are 6974 subjects left in the dataset.
 
+# Calculating follow-up and diet score. 
+
+## Follow-up 
+
+After finishing exclusion at the beginning, we are going to calculate follow-up year.
+
+We need to merge the cleaned data with other follow-up datasets.
+
+```{r}
+
+
+```
 
 
