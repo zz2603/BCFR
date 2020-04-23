@@ -561,7 +561,7 @@ bc_dx_int %>% filter(age_interview==999|agedx==999)
 
 ```
 
-There are 5 subjects with missing agedx. We can compare the dxdate alternatively. We next seet how many subjects have equal agedx and age_interview. 
+There are 5 subjects with missing agedx. We can compare the dxdate alternatively. We next see how many subjects have equal agedx and age_interview. 
 
 ```{r include=FALSE}
 bc_dx_int %>% filter(age_interview==agedx)
@@ -789,7 +789,7 @@ bc_dx_int_tbl <- bc_dx_int_tbl %>% mutate(dx_bf_int_yr_mth = case_when(
 
 ```
 
-use the indicator variable we built before to exclude those before interview date and 2 months before interview date.
+Use the indicator variable we built before to exclude those before interview date and 2 months before interview date.
 
 ```{r}
 # we only need new_id b/c we can use it to select the row from the whole dataset
@@ -849,7 +849,7 @@ bc_data7 %>% select(new_id,dt_interview,age_interview,
 
 * there are 70 subjects with both breast removed. We need check their ages.
 
-* there is 1 subject with unknown laterality.
+* there is 1 subject with unknown laterality. We need to check her age of mastectomy and then make decision. If her age of mastectomy is missing, we need to remove this subject.
 
 * there are 73 subjects with missing on both breast. They should be excluded.
 
@@ -859,6 +859,11 @@ bc_mas <- bc_data7 %>%
   select(new_id,dt_interview,age_interview,
          br_r_rem,br_r_rem_age,
          br_l_rem,br_l_rem_age)
+
+# check the subject with unknown laterality
+bc_mas %>% filter(br_l_rem == 3)
+# since their age of mastectomy are missing as well, we have to exclude it
+bc_mas <- bc_mas %>% filter(br_r_rem!=3 | br_l_rem!=3)
 
 # remove subjects with missing info on variables 'br_r_rem' and 'br_l_rem'
 bc_mas <- bc_mas %>% filter(br_r_rem!=9 | br_l_rem!=9)
@@ -905,7 +910,7 @@ bc_data8 <- bc_data7 %>%
 
 ```
 
-There are 7030 subjects left in the dataset.
+There are 7029 subjects left in the dataset.
 
 ## Check living status
 
@@ -923,7 +928,7 @@ bc_vs %>% group_by(vs) %>%
 
 ```
 
-There are 6370 alive subjects and 660 dead subjects.
+There are 6369 alive subjects and 660 dead subjects.
 
 ```{r}
 # see how many subjects who are alive but miss the info about last known living date
@@ -957,7 +962,13 @@ bc_data8 <- bc_data8 %>% filter(new_id %in% bc_vs_id)
 
 ```
 
-There are 54 dead subjects with missing info in both age of death and date of death.They should be excluded. 
+* There are 12 alive subjects with missing info in livedate. We cannot exclude them because they are not dead and may still be followed.
+
+* There are 287 alive subjects with N/A in livedate. We cannot exclude them because they are not dead and may still be followed.
+
+* There are 54 dead subjects with missing info in both age of death and date of death.They should be excluded. 
+
+There are 6974 subjects left in the dataset.
 
 
 
