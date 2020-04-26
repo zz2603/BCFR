@@ -978,9 +978,185 @@ After finishing exclusion at the beginning, we are going to calculate follow-up 
 
 We need to merge the cleaned data with other follow-up datasets.
 
+```{r include=FALSE}
+# merge the bc_data8 with bc_fu
+bc_data9 <- left_join(bc_data8, bc_fu, by="new_id") %>% 
+  select(-center_no.y)
+colnames(bc_data9)[2] <- "center_no"
+
+bc_data10 <- left_join(bc_data9,bc_fu2,by="new_id") %>% 
+  select(-center_no.y)
+colnames(bc_data10)[2] <- "center_no"
+
+bc_data11 <- left_join(bc_data10,bc_fu3,by="new_id") %>% 
+  select(-center_no.y)
+colnames(bc_data11)[2] <- "center_no"
+
+```
+
+### case
+
+Extract all subjects with diagnosis date or age.
+
+```{r include=FALSE}
+# create a subset of tibble bc_data11 for those subjects with dx info
+bc_data11_case <- bc_data11 %>% filter(!is.na(agedx))
+
+# select variables related with follow-up year calculation
+# also include variables related to mastectomy
+bc_case <- bc_data11_case %>% select(new_id,dt_interview,age_interview,
+                          dob,dxdate,agedx,vs,age_death,dthdate,
+                          br_r_rem,br_l_rem,br_r_rem_age,br_l_rem_age,
+                          dt_interview_fu,age_interview_fu,
+                          br_r_rem_fu,br_l_rem_fu,
+                          br_r_rem_age_fu,br_l_rem_age_fu,
+                          dt_interview_fu2_p,age_interview_fu2_p,
+                          br_r_rem_age_fu2_p,br_l_rem_age_fu2_p,
+                          dt_interview_fu3,br_r_rem_age_fu3,br_l_rem_age_fu3)
+                          
+                        
+```
+
+There are 473 cases in total. 
+
+Before we do the calculation, we need to extract those with missing age of diagnosis or equal age of diagnosis and interview.
+
+```{r echo=FALSE}
+# see how many subjects with missing agedx.
+bc_case %>% filter(agedx==999)
+
+# see how many subjects with equal age of dx and interview
+bc_case %>% filter(agedx==age_interview)
+
+```
+
+There are 2 subjects with with missing age of diagnosis; there are 18 subjects with equal age of diagnosis and interview.
+
+Set age of interview as start age and age of diagnosis as end age. Calculate the follow-up years using end age substracted by start age. If the end age is missing, we use date to calculate the end age.
+
 ```{r}
+bc_case <- bc_case %>% mutate(start_age = age_interview,
+                              end_age = agedx)
+
+miss_id <- bc_case %>% filter(agedx==999) %>% pull(new_id)
+bc_case_id <- bc_case %>% pull(new_id)
+
+bc_case[which(bc_case_id %in% miss_id)[1],28] <- as.period(ymd(bc_case[which(bc_case_id %in% miss_id)[1],5]) - ymd(bc_case[which(bc_case_id %in% miss_id)[1],4])) / years(1)
+
+bc_case[which(bc_case_id %in% miss_id)[2],28] <- as.period(ymd(bc_case[which(bc_case_id %in% miss_id)[2],5]) - ymd(bc_case[which(bc_case_id %in% miss_id)[2],4])) / years(1)
+
+bc_case <- bc_case %>% mutate(follow_up = end_age - start_age)
+
+bc_case %>% filter(follow_up==0)
+
+```
+
+There are 18 subject with 0 follow-up years because their follow-up is less than 1 year, which means their age of interview and diagnosis is equal.
+
+We don't want to miss those subjects, so we re-calculate the start age and end age with date. Then, we can get their follow-up.
+
+```{r}
+# create variable for id of subjects with 0 fu and incomplete dxdate
+case_fu0_id <- bc_case %>% filter(follow_up==0) %>% 
+  filter(!is.na(ymd(dxdate))) %>% 
+  pull(new_id)
+# re-calculate the start age and end age with date
+for (i in 1:length(case_fu0_id)) {
+  bc_case[which(bc_case_id %in% case_fu0_id)[i],27] <-
+    as.period(ymd(bc_case[which(bc_case_id %in% case_fu0_id)[i],2]) -
+                ymd(bc_case[which(bc_case_id %in% case_fu0_id)[i],4])) / years(1)
+  bc_case[which(bc_case_id %in% case_fu0_id)[i],28] <-
+    as.period(ymd(bc_case[which(bc_case_id %in% case_fu0_id)[i],5]) -
+                ymd(bc_case[which(bc_case_id %in% case_fu0_id)[i],4])) / years(1)
+  bc_case[which(bc_case_id %in% case_fu0_id)[i],29] <-
+    bc_case[which(bc_case_id %in% case_fu0_id)[i],28] - 
+    bc_case[which(bc_case_id %in% case_fu0_id)[i],27]
+} 
+
+# create variable for id of subjects with 0 fu
+case_fu0_id <- bc_case %>% filter(follow_up==0) %>% pull(new_id)
+# calculate and fill the fu mannually
+bc_case[which(bc_case_id %in% case_fu0_id)[1],29] <- 0.67
+bc_case[which(bc_case_id %in% case_fu0_id)[2],29] <- 0.33
+
+summary(bc_case$follow_up)
+
+Mode = function(x){
+    ta = table(x)
+    tam = max(ta)
+    if (all(ta == tam))
+         mod = NA
+    else
+         if(is.numeric(x))
+    mod = as.numeric(names(ta)[ta == tam])
+    else
+         mod = names(ta)[ta == tam]
+    return(mod)
+}
+
+Mode(bc_case$follow_up)
+
+```
+
+The mean follow-up of case is 7.64 years. The maximum follow-up year is 21 years; the minimum follow-up year is 0.23 years (less than 1).
+
+### control
+
+The censored subject include: death, lost to follow-up, mastectomy with both breast removed.
+
+The control subjects are those with NA in dxdate and agedx.
+
+```{r}
+# create a new tibble for control
+bc_data11_ctrl <- bc_data11 %>% filter(is.na(agedx))
+
+# select variables related to follow-up
+bc_ctrl <- bc_data11_ctrl %>% select(new_id,dt_interview,age_interview,
+                          dob,dxdate,agedx,vs,age_death,dthdate,
+                          br_r_rem,br_l_rem,br_r_rem_age,br_l_rem_age,
+                          dt_interview_fu,age_interview_fu,
+                          br_r_rem_fu,br_l_rem_fu,
+                          br_r_rem_age_fu,br_l_rem_age_fu,
+                          dt_interview_fu2_p,age_interview_fu2_p,
+                          br_r_rem_age_fu2_p,br_l_rem_age_fu2_p,
+                          dt_interview_fu3,br_r_rem_age_fu3,br_l_rem_age_fu3)
+
+```
+
+We want to separate bc_ctrl into three parts: death, mastectomy with both breasts removed, and others (complete study or lost to follow-up).
+
+We may check the mastectomy first because subjects with two breasts removed will be considered as censored even if they died after the mastectomy.
+
+```{r}
+# create a new tibble with alive subjects with mastectomy of both breasts
+# the tibble will be separated by 1 baseline and 3 fu questionnaires.
+
+# see how many subjects have both breasts removed at baseline
+bc_ctrl %>% filter(br_r_rem_age!=999&br_l_rem_age!=999)
+# at baseline questionnaire, no one has both breast removed.
+
+# see how many subjects have both breasts removed at first follow-up
+bc_ctrl %>% filter(br_r_rem_age_fu!=999&br_l_rem_age_fu!=999)
+# there are 61 subjects with both removed breasts
+# create a new tibble for those 61 subjects
+bc_ctrl_mas_fu <- bc_ctrl %>% filter(br_r_rem_age_fu!=999&br_l_rem_age_fu!=999)
+
+# see how many subjects have both breasts removed at second follow-up
+bc_ctrl %>% filter(br_l_rem_age_fu2_p!=999&br_r_rem_age_fu2_p!=999) 
+# there are 41 subjects with both breast removed
+# create a new tibble for those 41 subjects
+bc_ctrl_mas_fu2 <- bc_ctrl %>% filter(br_l_rem_age_fu2_p!=999&br_r_rem_age_fu2_p!=999) 
+
+# see how many subjects with both breasts removed at third follow-up
+bc_ctrl %>% filter(br_l_rem_age_fu3!=999&br_r_rem_age_fu3!=999)
+# there are 71 subjects with both breasts removed
+# create a new tibble for those 71 subjects
+bc_ctrl_mas_fu3 <- bc_ctrl %>% filter(br_l_rem_age_fu3!=999&br_r_rem_age_fu3!=999)
+
 
 
 ```
+
+
 
 
